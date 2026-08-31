@@ -1,41 +1,30 @@
 # -(Projects)
 
-Legacy project and genre placeholder folders from the original doaashow personal dump.
+Legacy project and genre placeholder library from the original doaashow dump.
 
-**Status:** Reference only.  
-New work goes in `03-production/`, `01-core/`, `02-the-fam/`, or `04-apps/`.
+**Status:** Reference only. New work goes in `01-core/`, `02-the-fam/`, `03-production/`, or `04-apps/`.
 
-## What lives here
+## Full index
+See `projects-index.json` for the complete list of ~180 folders.
 
-Hundreds of topic / genre folders such as:
+## Key projects that had real content in the original
 
-### Genres & Media
-- ACTION, ADVENTURE, DRAMA, MICRODRAMA, MOVIES, TV-SHOW, SYFY / SYFI
-- GAMES, MUSIC, RADIO, RADIOSHOW, VLOGS, NEWS, NEWSPAPER
-- STORIES, SCENES, SCRIPT, SHOW, THEATER / theater
+| Folder | Notes |
+|--------|-------|
+| `-(AI-AGENTS)` | Custom agents, Matt Grosso OS HTML |
+| `-(ARTIFACTS)` | Index cards, artifacts HTML, tech theater |
+| `-(DOASHOW)` | Many DOASHOW.1.x.html versions |
+| `-(MICRODRAMA)` | microdrama-ai.html + zips |
+| `-(RADIOSHOW)` | radioshow.1.1.html → 7.2.html |
+| `-(WORKSTATIONS)` | workstations.txt / json |
+| `-(TEST)` | TEST.1.1.html → 11.1.html |
+| `Broadcaster` | Broadcaster.html |
+| `Store-Directory` | Store Directory.html |
+| `desktop` | Full desktop subfolders (taskbar, settings, etc.) |
+| `SCANNED` | Large scan text files |
 
-### Characters & Roles
-- CHARACTER, CAST, PRODUCER, PRODUCTION, Writers / Writers
-- HERO, VILLAIN, KING, QUEEN, PRINCE, PRINCESS, ROYALTY
-- TEACHER, STUDENTS, NURSES, DR, JUDGE, LAWYERS, POLICE, COPS
-
-### The Fam & Social
-- THEFAM, SOCIAL, CHAT, MESSAGES, CHATBOT related
-
-### Places & Topics
-- SCHOOLS, UNIVERSITY, HOSPITALS, HOMES, OFFICE, KITCHEN
-- CAMPING, TRAVEL, VACATION, SPACE, UNIVERSE
-- BANKS, BUSINESS, REALESTATE, RETAIL, STORE, BUY, SELL, MONEY
-
-### Tech & Tools
-- AI, AI STUDIOS, AI-AGENTS, AGENTS, BOTS, CODE, DESKTOP, OS
-- 3d, 360, AR, VR, FX, WEAPONS
-
-### Other
-- A–Z letter folders, plus many more topic folders (see original repo for full list)
+## Genre / topic placeholders (examples)
+ACTION, ADVENTURE, DRAMA, MOVIES, TV-SHOW, GAMES, MUSIC, THEFAM, ZOMBIES, SCHOOLS, HOSPITALS, POLICE, PRODUCTION, CHARACTER, SCENES, SCRIPT, and many more (A–Z + topics).
 
 ## Source
-Full original tree:  
-https://github.com/callmecoffee3/doaashow/tree/main/-(Projects)
-
-This folder in **doaashow-clean** is the clean home for the legacy projects library.
+Original full tree: https://github.com/callmecoffee3/doaashow/tree/main/-(Projects)
