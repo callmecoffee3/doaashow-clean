@@ -1,23 +1,23 @@
 # -(Projects)
 
-Legacy project and genre library from the original doaashow dump.
+Legacy project library — files copied from original doaashow.
 
-## 11 key project folders (real content in original)
+## 11 key project folders (with real files copied)
 
-| Folder | Notes |
-|--------|-------|
-| `-(AI-AGENTS)/` | Custom agents, Matt Grosso OS HTML |
-| `-(ARTIFACTS)/` | Index cards, artifacts HTML, tech theater |
-| `-(DOASHOW)/` | DOASHOW.1.x.html versions |
-| `-(MICRODRAMA)/` | microdrama-ai experiments |
-| `-(RADIOSHOW)/` | radioshow.1.1 → 7.2 HTML |
-| `-(WORKSTATIONS)/` | workstations txt/json |
-| `-(TEST)/` | TEST.1.1 → 11.1 HTML |
+| Folder | Files copied |
+|--------|--------------|
+| `-(AI-AGENTS)/` | Defining-custom-agent-mattgrosso.md, mattgrosso.ai |
+| `-(ARTIFACTS)/` | (folder ready — large/zip content still in original) |
+| `-(DOASHOW)/` | (folder ready — many HTML versions in original) |
+| `-(MICRODRAMA)/` | (folder ready) |
+| `-(RADIOSHOW)/` | (folder ready — related: TMGS White Noise Radio in 04-apps) |
+| `-(WORKSTATIONS)/` | workstations.txt, workstations.json, workstations-ai-tabs.json |
+| `-(TEST)/` | (folder ready) |
 | `Broadcaster/` | Broadcaster.html |
 | `Store-Directory/` | Store Directory.html |
-| `desktop/` | Full legacy desktop tree |
-| `SCANNED/` | Large scan text files |
+| `desktop/` | (folder ready — active desktop in 01-core) |
+| `SCANNED/` | (folder ready — large scan files in original) |
 
-See `projects-index.json` for the full ~180 folder list.
+Large HTML (e.g. Mattgrosso-Os-V5-Final ~250KB) and zips remain in the original repo for now.
 
-Original tree: https://github.com/callmecoffee3/doaashow/tree/main/-(Projects)
+Original: https://github.com/callmecoffee3/doaashow/tree/main/-(Projects)
