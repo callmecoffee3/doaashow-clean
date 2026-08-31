@@ -2,7 +2,7 @@
 
 **Planning, ideas, and setup before the cameras (or code) roll.**
 
-This folder is the creative launchpad for anything you want to make inside doaashow-clean — movies, TV shows, games, microdramas, radio shows, or wild experiments.
+This folder is the creative launchpad for anything you want to make inside doaashow-clean — movies, TV shows, games, podcasts, theatre, microdramas, radio shows, or wild experiments.
 
 > Entertainment purposes only — just for goofing off and having fun.  
 > Built by **Matt Grosso** ([@callmecoffee3](https://github.com/callmecoffee3))
@@ -21,10 +21,27 @@ This folder is the creative launchpad for anything you want to make inside doaas
 | Production checklists | What you still need before starting |
 | Mood boards / reference | Links, image lists, audio vibes |
 | Episode / season plans | Series structure, arcs, cliffhangers |
+| **Crew & talent lists** | Roles for every department (movie, TV, games, podcasts, theatre) |
 
 Key source material from the original project also lives in:
 - `docs/PROJECT_BRIEF.md`
 - `docs/MIND-MAP.md`
+
+---
+
+## Media-type crew & talent files
+
+Use these when you start a new project so you know who (or what role) you need:
+
+| File | Covers |
+|------|--------|
+| `crew-movie.md` | Feature / short film crew + talent |
+| `crew-tv.md` | TV series / episodic crew + talent |
+| `crew-games.md` | Game development roles |
+| `crew-podcasts.md` | Podcast / radio-style production |
+| `crew-theatre.md` | Stage / live theatre company |
+
+Each file lists departments, job titles, and typical talent positions so you can assign people (or invent characters) for your simulated productions.
 
 ---
 
@@ -33,8 +50,9 @@ Key source material from the original project also lives in:
 1. **Dump ideas** → `ideas.md` (or a new file)
 2. **Pick one** and write a short treatment
 3. **Sketch characters** and the world
-4. **Break into scenes** or levels
-5. **Move finished pieces** into:
+4. **Assign crew & talent** using the lists below
+5. **Break into scenes** or levels
+6. **Move finished pieces** into:
    - `../characters/`
    - `../scenes/`
    - `../shows/`
@@ -49,6 +67,11 @@ Keep this folder messy and playful. Polish comes later.
 - `ideas.md` — running list of concepts
 - `treatment-template.md` — fill-in-the-blank treatment
 - `pre-prod-checklist.md` — quick checklist before you start building
+- `crew-movie.md`
+- `crew-tv.md`
+- `crew-games.md`
+- `crew-podcasts.md`
+- `crew-theatre.md`
 
 Add more files anytime. Name them clearly (`show-name-treatment.md`, `zombie-park-ideas.md`, etc.).
 
