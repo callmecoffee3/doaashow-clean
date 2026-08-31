@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TMGS : White Noise Radio</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(ellipse at center, #1a1a2e 0%, #0d0d14 70%);
+      color: #e8e8e8;
+      overflow: hidden;
+    }
+    .radio {
+      width: min(420px, 92vw);
+      background: linear-gradient(160deg, #2a2a3a 0%, #1a1a28 100%);
+      border: 2px solid #3d3d55;
+      border-radius: 16px;
+      padding: 28px 24px 24px;
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .radio::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(100,180,255,0.15), transparent 40%);
+      pointer-events: none;
+    }
+    .brand {
+      text-align: center;
+      margin-bottom: 8px;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      color: #7a9bb8;
+      text-transform: uppercase;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #f0f4ff;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #8899aa;
+      margin-bottom: 22px;
+    }
+    .display {
+      background: #0a0a12;
+      border: 1px solid #2a2a40;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-family: "Consolas", "Courier New", monospace;
+    }
+    .station {
+      font-size: 1.1rem;
+      color: #6ec6ff;
+      margin-bottom: 6px;
+    }
+    .status {
+      font-size: 0.75rem;
+      color: #668;
+      min-height: 1.2em;
+    }
+    .status.on { color: #5dca7a; }
+    .vu {
+      display: flex;
+      gap: 3px;
+      justify-content: center;
+      margin-top: 10px;
+      height: 18px;
+      align-items: flex-end;
+    }
+    .vu span {
+      width: 6px;
+      background: #2a4a3a;
+      border-radius: 2px;
+      transition: height 0.08s, background 0.08s;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    label {
+      font-size: 0.75rem;
+      color: #99a;
+      width: 70px;
+      flex-shrink: 0;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #5a9fd4;
+      height: 6px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    button {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s, background 0.15s;
+    }
+    button:active { transform: scale(0.97); }
+    #playBtn {
+      background: linear-gradient(180deg, #4a9fe0, #2a6fa0);
+      color: #fff;
+    }
+    #playBtn.playing {
+      background: linear-gradient(180deg, #e05a4a, #a02a2a);
+    }
+    #typeBtn {
+      background: #2a2a3a;
+      color: #ccd;
+      border: 1px solid #3a3a50;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.65rem;
+      color: #556;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="radio">
+    <div class="brand">TMGS · The Matt Grosso Show</div>
+    <h1>White Noise Radio</h1>
+    <p class="subtitle">Tune in. Zone out. Entertainment only.</p>
+
+    <div class="display">
+      <div class="station" id="stationName">WHITE NOISE — 98.7 FM</div>
+      <div class="status" id="status">Ready</div>
+      <div class="vu" id="vu">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="row">
+        <label>Volume</label>
+        <input type="range" id="volume" min="0" max="100" value="40" />
+      </div>
+      <div class="row">
+        <label>Filter</label>
+        <input type="range" id="filter" min="200" max="8000" value="2500" />
+      </div>
+      <div class="btn-row">
+        <button id="playBtn">▶ Play</button>
+        <button id="typeBtn">Noise: White</button>
+      </div>
+    </div>
+
+    <div class="footer">doaashow · callmecoffee3 · just for fun</div>
+  </div>
+
+  <script>
+    const TYPES = ["white", "pink", "brown"];
+    const NAMES = {
+      white: "WHITE NOISE — 98.7 FM",
+      pink: "PINK NOISE — 102.3 FM",
+      brown: "BROWN NOISE — 88.1 FM"
+    };
+
+    let typeIndex = 0;
+    let audioCtx = null;
+    let noiseNode = null;
+    let gainNode = null;
+    let filterNode = null;
+    let playing = false;
+    let vuTimer = null;
+
+    const playBtn = document.getElementById("playBtn");
+    const typeBtn = document.getElementById("typeBtn");
+    const volume = document.getElementById("volume");
+    const filter = document.getElementById("filter");
+    const status = document.getElementById("status");
+    const stationName = document.getElementById("stationName");
+    const vuBars = [...document.querySelectorAll("#vu span")];
+
+    function createNoiseBuffer(ctx, noiseType) {
+      const bufferSize = ctx.sampleRate * 2;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+
+      if (noiseType === "white") {
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+      } else if (noiseType === "pink") {
+        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99886 * b0 + white * 0.0555179;
+          b1 = 0.99332 * b1 + white * 0.0750759;
+          b2 = 0.96900 * b2 + white * 0.1538520;
+          b3 = 0.86650 * b3 + white * 0.3104856;
+          b4 = 0.55000 * b4 + white * 0.5329522;
+          b5 = -0.7616 * b5 - white * 0.0168980;
+          data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+          b6 = white * 0.115926;
+        }
+      } else {
+        // brown
+        let last = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          last = (last + 0.02 * white) / 1.02;
+          data[i] = last * 3.5;
+        }
+      }
+      return buffer;
+    }
+
+    function start() {
+      if (playing) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const buffer = createNoiseBuffer(audioCtx, TYPES[typeIndex]);
+
+      noiseNode = audioCtx.createBufferSource();
+      noiseNode.buffer = buffer;
+      noiseNode.loop = true;
+
+      filterNode = audioCtx.createBiquadFilter();
+      filterNode.type = "lowpass";
+      filterNode.frequency.value = Number(filter.value);
+
+      gainNode = audioCtx.createGain();
+      gainNode.gain.value = Number(volume.value) / 100 * 0.35;
+
+      noiseNode.connect(filterNode);
+      filterNode.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      noiseNode.start();
+      playing = true;
+
+      playBtn.textContent = "■ Stop";
+      playBtn.classList.add("playing");
+      status.textContent = "On air";
+      status.classList.add("on");
+      startVu();
+    }
+
+    function stop() {
+      if (!playing) return;
+      try { noiseNode.stop(); } catch (_) {}
+      try { audioCtx.close(); } catch (_) {}
+      noiseNode = null;
+      audioCtx = null;
+      playing = false;
+
+      playBtn.textContent = "▶ Play";
+      playBtn.classList.remove("playing");
+      status.textContent = "Ready";
+      status.classList.remove("on");
+      stopVu();
+    }
+
+    function restartIfPlaying() {
+      if (playing) {
+        stop();
+        start();
+      }
+    }
+
+    function startVu() {
+      stopVu();
+      vuTimer = setInterval(() => {
+        vuBars.forEach((bar, i) => {
+          const h = playing ? 4 + Math.random() * 14 : 2;
+          bar.style.height = h + "px";
+          bar.style.background = h > 12 ? "#5dca7a" : h > 7 ? "#4a9fe0" : "#2a4a3a";
+        });
+      }, 80);
+    }
+
+    function stopVu() {
+      if (vuTimer) clearInterval(vuTimer);
+      vuTimer = null;
+      vuBars.forEach(bar => {
+        bar.style.height = "3px";
+        bar.style.background = "#2a4a3a";
+      });
+    }
+
+    playBtn.addEventListener("click", () => {
+      if (playing) stop();
+      else start();
+    });
+
+    typeBtn.addEventListener("click", () => {
+      typeIndex = (typeIndex + 1) % TYPES.length;
+      const t = TYPES[typeIndex];
+      typeBtn.textContent = "Noise: " + t.charAt(0).toUpperCase() + t.slice(1);
+      stationName.textContent = NAMES[t];
+      restartIfPlaying();
+    });
+
+    volume.addEventListener("input", () => {
+      if (gainNode) gainNode.gain.value = Number(volume.value) / 100 * 0.35;
+    });
+
+    filter.addEventListener("input", () => {
+      if (filterNode) filterNode.frequency.value = Number(filter.value);
+    });
+  </script>
+</body>
+</html>
