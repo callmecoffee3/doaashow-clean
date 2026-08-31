@@ -1,5 +1,9 @@
 # Store-Directory
 
-Mall / store directory experiments from the original dump.
+Key project from original doaashow.
 
-Related active work can go under `04-apps/mall-stores/`.
+Notable: Store Directory.html
+
+Related active home: `04-apps/mall-stores/`
+
+Source: https://github.com/callmecoffee3/doaashow/tree/main/-(Projects)/Store-Directory
