@@ -15,6 +15,9 @@ This folder is the creative launchpad for anything you want to make inside doaas
 |-------------|--------|
 | Ideas & brain dumps | Raw concepts, one-liners, "what if" notes |
 | Treatments / synopses | Short story outlines (1–3 pages) |
+| Index-card treatments | Beat-by-beat cards for structure |
+| Writer-area treatments | Space for the writer to work the story |
+| Contact treatments | Who to reach for each department / role |
 | Character sheets | Who they are, what they want, how they talk |
 | World / setting notes | Locations, rules of the universe, vibe |
 | Scene breakdowns | Beat sheets, shot lists, rough scripts |
@@ -31,8 +34,6 @@ Key source material from the original project also lives in:
 
 ## Media-type crew & talent files
 
-Use these when you start a new project so you know who (or what role) you need:
-
 | File | Covers |
 |------|--------|
 | `crew-movie.md` | Feature / short film crew + talent |
@@ -41,22 +42,28 @@ Use these when you start a new project so you know who (or what role) you need:
 | `crew-podcasts.md` | Podcast / radio-style production |
 | `crew-theatre.md` | Stage / live theatre company |
 
-Each file lists departments, job titles, and typical talent positions so you can assign people (or invent characters) for your simulated productions.
+---
+
+## Treatment templates
+
+| File | Purpose |
+|------|--------|
+| `treatment-template.md` | Classic short prose treatment |
+| `index-card-treatment.md` | Index-card / beat-card style structure |
+| `writer-area-treatment.md` | Dedicated writer workspace & notes |
+| `contact-treatment.md` | Contact sheet for key people on the project |
 
 ---
 
 ## Suggested workflow
 
-1. **Dump ideas** → `ideas.md` (or a new file)
-2. **Pick one** and write a short treatment
-3. **Sketch characters** and the world
-4. **Assign crew & talent** using the lists below
-5. **Break into scenes** or levels
-6. **Move finished pieces** into:
-   - `../characters/`
-   - `../scenes/`
-   - `../shows/`
-   - `../story-tools/`
+1. **Dump ideas** → `ideas.md`
+2. **Pick one** and write a short treatment (or start with index cards)
+3. **Work the story** in the writer-area treatment
+4. **Sketch characters** and the world
+5. **Assign crew & talent** + fill the contact treatment
+6. **Break into scenes** or levels
+7. **Move finished pieces** into `../characters/`, `../scenes/`, `../shows/`, `../story-tools/`
 
 Keep this folder messy and playful. Polish comes later.
 
@@ -64,9 +71,12 @@ Keep this folder messy and playful. Polish comes later.
 
 ## Starter files in this folder
 
-- `ideas.md` — running list of concepts
-- `treatment-template.md` — fill-in-the-blank treatment
-- `pre-prod-checklist.md` — quick checklist before you start building
+- `ideas.md`
+- `treatment-template.md`
+- `index-card-treatment.md`
+- `writer-area-treatment.md`
+- `contact-treatment.md`
+- `pre-prod-checklist.md`
 - `crew-movie.md`
 - `crew-tv.md`
 - `crew-games.md`
