@@ -35,14 +35,14 @@ doaashow-clean/
 │   └── cloudos/             # Cloud OS experiments
 │
 ├── 02-the-fam/              # Social network simulation
-│   ├── terminal/            # The Fam terminal UIs
-│   ├── bat/                 # Batch launchers for The Fam
+│   ├── terminal/
+│   ├── bat/
 │   ├── feed/
 │   ├── messenger/
 │   └── profiles/
 │
 ├── 03-production/           # Media creation tools
-│   ├── story-tools/         # Story writers, playbill, scene generators
+│   ├── story-tools/
 │   ├── shows/
 │   ├── characters/
 │   ├── scenes/
@@ -51,9 +51,10 @@ doaashow-clean/
 ├── 04-apps/                 # Standalone tools & experiments
 │   ├── folder-scanner/
 │   ├── shopping/
-│   ├── games/               # Zombie game, virus simulator, etc.
-│   ├── mall-stores/         # 300stores experiments
-│   └── utilities/
+│   ├── games/
+│   ├── mall-stores/
+│   ├── utilities/
+│   └── the-fam-apps/
 │
 ├── 05-assets/               # All shared media
 │   ├── images/
@@ -62,6 +63,7 @@ doaashow-clean/
 │   └── icons/
 │
 ├── 06-legacy/               # Old experiments (reference only)
+│   ├── -(Projects)/         # Full legacy genre/topic library
 │   ├── old-html/
 │   ├── old-bat/
 │   └── archives/
@@ -73,20 +75,18 @@ doaashow-clean/
 
 ## Quick Start
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/callmecoffee3/doaashow-clean.git
-   ```
+```bash
+git clone https://github.com/callmecoffee3/doaashow-clean.git
+```
 
-2. Explore the numbered folders.
-
-3. Open any `.html` files in a browser. Run `.bat` files on Windows.
+Explore the numbered folders. Open any `.html` files in a browser. Run `.bat` files on Windows.
 
 ---
 
 ## Rules
 
-- **New work** goes into the numbered folders (`01-core/`, `02-the-fam/`, etc.)
+- **New work** → `01-core/`, `02-the-fam/`, `03-production/`, `04-apps/`, `05-assets/`
+- **Legacy / old dumps** → `06-legacy/` (including `-(Projects)`)
 - Keep the playful spirit — this is a lab, not a polished product
 
 ---
