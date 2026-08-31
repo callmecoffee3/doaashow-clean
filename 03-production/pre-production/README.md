@@ -18,6 +18,7 @@ This folder is the creative launchpad for anything you want to make inside doaas
 | Index-card treatments | Beat-by-beat cards for structure |
 | Writer-area treatments | Space for the writer to work the story |
 | Contact treatments | Who to reach for each department / role |
+| Classic writing stages | Step-by-step path from idea to locked treatment |
 | Character sheets | Who they are, what they want, how they talk |
 | World / setting notes | Locations, rules of the universe, vibe |
 | Scene breakdowns | Beat sheets, shot lists, rough scripts |
@@ -44,10 +45,11 @@ Key source material from the original project also lives in:
 
 ---
 
-## Treatment templates
+## Treatment templates & stages
 
 | File | Purpose |
 |------|--------|
+| `stages-of-writing-treatments.md` | **Classic stages** from idea → locked treatment |
 | `treatment-template.md` | Classic short prose treatment |
 | `index-card-treatment.md` | Index-card / beat-card style structure |
 | `writer-area-treatment.md` | Dedicated writer workspace & notes |
@@ -58,8 +60,8 @@ Key source material from the original project also lives in:
 ## Suggested workflow
 
 1. **Dump ideas** → `ideas.md`
-2. **Pick one** and write a short treatment (or start with index cards)
-3. **Work the story** in the writer-area treatment
+2. Follow the **classic stages** in `stages-of-writing-treatments.md`
+3. Use the matching templates (index cards, writer area, prose treatment)
 4. **Sketch characters** and the world
 5. **Assign crew & talent** + fill the contact treatment
 6. **Break into scenes** or levels
@@ -72,6 +74,7 @@ Keep this folder messy and playful. Polish comes later.
 ## Starter files in this folder
 
 - `ideas.md`
+- `stages-of-writing-treatments.md`
 - `treatment-template.md`
 - `index-card-treatment.md`
 - `writer-area-treatment.md`
