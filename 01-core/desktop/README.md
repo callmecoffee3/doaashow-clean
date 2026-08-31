@@ -2,4 +2,9 @@
 
 Simulated desktop environment experiments.
 
-Place main desktop HTML/JS/React components here.
+## Planned / Coming files
+- DesktopContext.tsx (React desktop context)
+- Main desktop HTML prototypes
+- Taskbar, windows, icons, settings experiments
+
+This is the home for the Callmecoffee3 simulated desktop.
