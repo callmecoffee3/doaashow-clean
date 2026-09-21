@@ -8,5 +8,6 @@ Centralized media assets.
 - **audio/**
 - **video/**
 - **icons/**
+- **bots/** — Studio bot memory and roster (Matt Grosso Studios Bot Roster)
 
 Robot-related media references live in `docs/robot-news-female-humanoids-2026-08.md` with links to public videos and photo coverage. Download stills into `images/robots/` as needed for local use.
