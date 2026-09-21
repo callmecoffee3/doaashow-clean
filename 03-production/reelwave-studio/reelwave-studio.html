@@ -1,1 +1,604 @@
-PLACEHOLDER_WILL_REPLACE
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ReelWave • Micro Drama Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #09090b; color: #fafafa; }
+    .phone-frame { max-width: 430px; margin: 0 auto; min-height: 100vh; position: relative; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; background: rgba(9,9,11,0.95); backdrop-filter: blur(12px); border-top: 1px solid #27272a; z-index: 50; }
+    .nav-item.active { color: #ec4899; }
+    .drama-card { transition: transform 0.25s; }
+    .drama-card:active { transform: scale(0.97); }
+    .story-ring { background: linear-gradient(45deg, #ec4899, #8b5cf6, #f59e0b); padding: 2px; border-radius: 9999px; }
+    .coin { color: #fbbf24; }
+    .toast { animation: slideUp 0.3s ease-out; }
+    @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .pulse-dot { animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .vertical-preview { aspect-ratio: 9/16; background: #18181b; }
+    .progress-bar { transition: width 0.5s ease; }
+    ::-webkit-scrollbar { width: 0; height: 0; }
+  </style>
+</head>
+<body>
+<div class="phone-frame bg-zinc-950 pb-20">
+
+  <!-- TOP BAR -->
+  <header id="topBar" class="sticky top-0 z-40 bg-zinc-950/95 backdrop-blur border-b border-zinc-800 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-violet-400 bg-clip-text text-transparent">RW</span>
+      <div>
+        <div class="text-lg font-bold leading-none">ReelWave</div>
+        <div class="text-[10px] text-pink-400 tracking-widest">STUDIO</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="showTab('shop')" class="relative p-2"><i class="fas fa-coins coin"></i><span id="coinBadge" class="absolute -top-1 -right-1 bg-pink-500 text-[9px] px-1.5 rounded-full">120</span></button>
+      <button onclick="showTab('messenger')" class="relative p-2"><i class="fas fa-comment-dots"></i><span class="absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full pulse-dot"></span></button>
+      <button onclick="showToast('Profile coming soon')" class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-violet-600 flex items-center justify-center text-xs font-bold">MG</button>
+    </div>
+  </header>
+
+  <!-- HOME / COMMUNITY FEED -->
+  <section id="tab-home" class="tab-content active px-3 pt-3">
+    <div class="flex gap-3 overflow-x-auto pb-3 mb-3">
+      <div class="flex-shrink-0 text-center" onclick="showTab('studio')">
+        <div class="w-16 h-16 rounded-full bg-zinc-800 border-2 border-dashed border-pink-500 flex items-center justify-center text-pink-400 text-xl">+</div>
+        <div class="text-[10px] mt-1 text-zinc-400">Create</div>
+      </div>
+      <div class="flex-shrink-0 text-center" onclick="openStory('Elena')">
+        <div class="story-ring"><img src="https://picsum.photos/id/64/100/100" class="w-14 h-14 rounded-full object-cover border-2 border-zinc-950"></div>
+        <div class="text-[10px] mt-1">Elena</div>
+      </div>
+      <div class="flex-shrink-0 text-center" onclick="openStory('Kane')">
+        <div class="story-ring"><img src="https://picsum.photos/id/91/100/100" class="w-14 h-14 rounded-full object-cover border-2 border-zinc-950"></div>
+        <div class="text-[10px] mt-1">Mr.Kane</div>
+      </div>
+      <div class="flex-shrink-0 text-center" onclick="openStory('Fam')">
+        <div class="story-ring"><img src="https://picsum.photos/id/1011/100/100" class="w-14 h-14 rounded-full object-cover border-2 border-zinc-950"></div>
+        <div class="text-[10px] mt-1">TheFam</div>
+      </div>
+    </div>
+
+    <div id="feed" class="space-y-4">
+      <article class="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800">
+        <div class="flex items-center gap-3 p-3">
+          <img src="https://picsum.photos/id/64/80/80" class="w-9 h-9 rounded-full object-cover">
+          <div class="flex-1">
+            <div class="font-semibold text-sm">Elena • <span class="text-pink-400 text-xs">Creator</span></div>
+            <div class="text-[10px] text-zinc-500">2h ago • Secret Wife Romance</div>
+          </div>
+        </div>
+        <div class="relative vertical-preview mx-3 rounded-xl overflow-hidden cursor-pointer" onclick="playDrama('My Boss Secret Wife','Elena')">
+          <img src="https://picsum.photos/id/201/400/700" class="w-full h-full object-cover">
+          <div class="absolute inset-0 flex items-center justify-center bg-black/30">
+            <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center"><i class="fas fa-play text-2xl"></i></div>
+          </div>
+          <div class="absolute bottom-2 left-2 right-2 flex justify-between text-xs">
+            <span class="bg-black/60 px-2 py-0.5 rounded-full">Ep 1 • 1:45</span>
+            <span class="bg-pink-500/90 px-2 py-0.5 rounded-full font-bold">NEW</span>
+          </div>
+        </div>
+        <div class="p-3">
+          <p class="text-sm mb-2">Contract marriage with the boy who saved me 10 years ago 💔✨ #microdrama #ceo</p>
+          <div class="flex items-center gap-5 text-sm text-zinc-400">
+            <button onclick="likePost(this)"><i class="far fa-heart"></i> <span>2.4k</span></button>
+            <button onclick="showToast('Comments open')"><i class="far fa-comment"></i> 312</button>
+            <button onclick="showToast('Shared')"><i class="fas fa-share"></i></button>
+            <button class="ml-auto" onclick="showToast('Saved')"><i class="far fa-bookmark"></i></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800">
+        <div class="flex items-center gap-3 p-3">
+          <img src="https://picsum.photos/id/1025/80/80" class="w-9 h-9 rounded-full object-cover">
+          <div class="flex-1">
+            <div class="font-semibold text-sm">Studio Official</div>
+            <div class="text-[10px] text-zinc-500">5h ago</div>
+          </div>
+        </div>
+        <div class="px-3 pb-2 text-sm">New AI tools dropped 🔥 Generate full vertical episodes in under 60s. Try Studio now!</div>
+        <div class="mx-3 mb-3 h-32 bg-gradient-to-r from-pink-600 to-violet-600 rounded-xl flex items-center justify-center cursor-pointer" onclick="showTab('studio')">
+          <span class="font-bold text-lg">Open Studio →</span>
+        </div>
+        <div class="px-3 pb-3 flex gap-5 text-sm text-zinc-400">
+          <button onclick="likePost(this)"><i class="far fa-heart"></i> 891</button>
+          <button><i class="far fa-comment"></i> 64</button>
+        </div>
+      </article>
+
+      <article class="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800">
+        <div class="flex items-center gap-3 p-3">
+          <img src="https://picsum.photos/id/91/80/80" class="w-9 h-9 rounded-full object-cover">
+          <div class="flex-1">
+            <div class="font-semibold text-sm">Mr.Kane</div>
+            <div class="text-[10px] text-zinc-500">Yesterday</div>
+          </div>
+        </div>
+        <div class="relative vertical-preview mx-3 rounded-xl overflow-hidden cursor-pointer" onclick="playDrama('The Cold CEO Returns','Kane')">
+          <img src="https://picsum.photos/id/237/400/700" class="w-full h-full object-cover">
+          <div class="absolute inset-0 flex items-center justify-center bg-black/30">
+            <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center"><i class="fas fa-play text-2xl"></i></div>
+          </div>
+        </div>
+        <div class="p-3">
+          <p class="text-sm mb-2">He never forgot her. Episode 3 just dropped 👀</p>
+          <div class="flex items-center gap-5 text-sm text-zinc-400">
+            <button onclick="likePost(this)"><i class="far fa-heart"></i> 5.1k</button>
+            <button><i class="far fa-comment"></i> 890</button>
+            <button class="ml-auto"><i class="far fa-bookmark"></i></button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <button onclick="createPost()" class="fixed bottom-24 right-4 w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 shadow-lg shadow-pink-500/30 flex items-center justify-center text-2xl z-30">
+      <i class="fas fa-plus"></i>
+    </button>
+  </section>
+
+  <!-- STUDIO -->
+  <section id="tab-studio" class="tab-content px-4 pt-4">
+    <h2 class="text-2xl font-bold mb-1">AI Drama Studio</h2>
+    <p class="text-zinc-400 text-sm mb-5">Big drama. Small screen. Make yours in under 60s.</p>
+
+    <div class="grid grid-cols-2 gap-3 mb-5">
+      <button onclick="newProject()" class="bg-zinc-900 border border-zinc-700 rounded-2xl p-4 text-left hover:border-pink-500 transition">
+        <i class="fas fa-folder-plus text-pink-400 mb-2"></i>
+        <div class="font-semibold text-sm">New Project</div>
+        <div class="text-[10px] text-zinc-500">Story container</div>
+      </button>
+      <button onclick="showToast('Deck saved to workspace')" class="bg-zinc-900 border border-zinc-700 rounded-2xl p-4 text-left hover:border-pink-500 transition">
+        <i class="fas fa-layer-group text-violet-400 mb-2"></i>
+        <div class="font-semibold text-sm">My Decks</div>
+        <div class="text-[10px] text-zinc-500">3 active</div>
+      </button>
+    </div>
+
+    <div class="mb-4">
+      <div class="text-xs text-zinc-500 mb-2 uppercase tracking-wider">Index Cards</div>
+      <div class="flex gap-2 overflow-x-auto pb-1">
+        <button onclick="addCard('character')" class="flex-shrink-0 px-3 py-1.5 bg-zinc-800 rounded-full text-xs border border-zinc-700">👤 Character</button>
+        <button onclick="addCard('scene')" class="flex-shrink-0 px-3 py-1.5 bg-zinc-800 rounded-full text-xs border border-zinc-700">🎬 Scene</button>
+        <button onclick="addCard('prop')" class="flex-shrink-0 px-3 py-1.5 bg-zinc-800 rounded-full text-xs border border-zinc-700">💍 Prop</button>
+        <button onclick="addCard('animal')" class="flex-shrink-0 px-3 py-1.5 bg-zinc-800 rounded-full text-xs border border-zinc-700">🐱 Animal</button>
+        <button onclick="addCard('prompt')" class="flex-shrink-0 px-3 py-1.5 bg-zinc-800 rounded-full text-xs border border-zinc-700">✨ Prompt</button>
+      </div>
+    </div>
+
+    <div id="cardList" class="space-y-2 mb-5 max-h-40 overflow-y-auto"></div>
+
+    <textarea id="promptInput" rows="3" class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl p-4 text-sm resize-none focus:outline-none focus:border-pink-500 placeholder:text-zinc-600" placeholder="A poor secretary discovers the cold CEO is the boy who saved her life 10 years ago..."></textarea>
+
+    <button id="generateBtn" onclick="generateDrama()" class="mt-4 w-full py-4 font-bold bg-gradient-to-r from-pink-500 to-violet-600 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20 active:scale-[0.98] transition">
+      <i class="fas fa-magic"></i> GENERATE MICRO DRAMA
+    </button>
+    <p class="text-[10px] text-zinc-500 text-center mt-2">Free generations left today: <span id="freeLeft">3</span></p>
+
+    <div id="genProgress" class="hidden mt-6 bg-zinc-900 rounded-2xl p-5 border border-zinc-800">
+      <div class="text-sm font-semibold mb-4 text-center">Creating your drama...</div>
+      <div class="space-y-3 text-sm" id="steps">
+        <div class="flex items-center gap-3 text-zinc-500" data-step="1"><div class="w-6 h-6 rounded-full border border-zinc-600 flex items-center justify-center text-xs">1</div> Script & dialogue</div>
+        <div class="flex items-center gap-3 text-zinc-500" data-step="2"><div class="w-6 h-6 rounded-full border border-zinc-600 flex items-center justify-center text-xs">2</div> Casting AI actors</div>
+        <div class="flex items-center gap-3 text-zinc-500" data-step="3"><div class="w-6 h-6 rounded-full border border-zinc-600 flex items-center justify-center text-xs">3</div> Filming scenes</div>
+        <div class="flex items-center gap-3 text-zinc-500" data-step="4"><div class="w-6 h-6 rounded-full border border-zinc-600 flex items-center justify-center text-xs">4</div> Edit & render</div>
+      </div>
+      <div class="mt-4 w-full bg-zinc-800 rounded-full h-2"><div id="pBar" class="progress-bar bg-gradient-to-r from-pink-500 to-violet-500 h-2 rounded-full" style="width:0%"></div></div>
+      <div id="pText" class="text-center text-xs text-zinc-400 mt-1">0%</div>
+    </div>
+
+    <div id="videoResult" class="hidden mt-6">
+      <div class="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800">
+        <div class="vertical-preview relative">
+          <img id="resultPoster" src="https://picsum.photos/id/201/400/700" class="w-full h-full object-cover">
+          <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center"><i class="fas fa-play text-3xl"></i></div></div>
+        </div>
+        <div class="p-4">
+          <h3 id="resultTitle" class="font-bold mb-1">Your Micro Drama</h3>
+          <p id="resultPrompt" class="text-xs text-zinc-400 mb-3 line-clamp-2"></p>
+          <div class="flex gap-2">
+            <button onclick="publishDrama()" class="flex-1 py-2.5 bg-pink-500 rounded-xl text-sm font-semibold">Post to Community</button>
+            <button onclick="resetStudio()" class="flex-1 py-2.5 bg-zinc-800 rounded-xl text-sm font-semibold">New One</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROUPS -->
+  <section id="tab-groups" class="tab-content px-4 pt-4">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold">Groups</h2>
+      <button onclick="showToast('Create group modal')" class="text-pink-400 text-sm font-medium">+ New</button>
+    </div>
+    <div class="space-y-3">
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 flex items-center gap-3 cursor-pointer" onclick="openGroup('CEO Romance Writers')">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-xl">💕</div>
+        <div class="flex-1">
+          <div class="font-semibold text-sm">CEO Romance Writers</div>
+          <div class="text-[10px] text-zinc-500">1.2k members • 48 online</div>
+        </div>
+        <span class="text-xs bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full">Hot</span>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 flex items-center gap-3 cursor-pointer" onclick="openGroup('MicroDrama Lab')">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-xl">🎬</div>
+        <div class="flex-1">
+          <div class="font-semibold text-sm">MicroDrama Lab</div>
+          <div class="text-[10px] text-zinc-500">890 members • Official</div>
+        </div>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 flex items-center gap-3 cursor-pointer" onclick="openGroup('The Fam Creators')">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xl">☕</div>
+        <div class="flex-1">
+          <div class="font-semibold text-sm">The Fam Creators</div>
+          <div class="text-[10px] text-zinc-500">312 members • Matt's crew</div>
+        </div>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 flex items-center gap-3 cursor-pointer" onclick="openGroup('Vertical Only')">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-xl">📱</div>
+        <div class="flex-1">
+          <div class="font-semibold text-sm">Vertical Only</div>
+          <div class="text-[10px] text-zinc-500">2.4k members</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGES -->
+  <section id="tab-pages" class="tab-content px-4 pt-4">
+    <h2 class="text-2xl font-bold mb-4">Pages</h2>
+    <div class="space-y-3">
+      <div class="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 cursor-pointer" onclick="openPage('Elena')">
+        <div class="h-24 bg-gradient-to-r from-pink-600 to-rose-500 relative">
+          <img src="https://picsum.photos/id/64/120/120" class="absolute -bottom-6 left-4 w-16 h-16 rounded-full border-4 border-zinc-900 object-cover">
+        </div>
+        <div class="pt-8 px-4 pb-4">
+          <div class="font-bold">Elena • Creator</div>
+          <div class="text-xs text-zinc-400 mb-2">Secret Wife Romance • 4.2M views</div>
+          <div class="flex gap-4 text-xs text-zinc-500"><span>128 dramas</span><span>89k followers</span></div>
+        </div>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 cursor-pointer" onclick="openPage('ReelWave Official')">
+        <div class="h-24 bg-gradient-to-r from-violet-600 to-purple-500 relative">
+          <div class="absolute -bottom-6 left-4 w-16 h-16 rounded-full border-4 border-zinc-900 bg-zinc-800 flex items-center justify-center text-2xl font-black text-pink-400">RW</div>
+        </div>
+        <div class="pt-8 px-4 pb-4">
+          <div class="font-bold">ReelWave Official</div>
+          <div class="text-xs text-zinc-400 mb-2">The home of user micro dramas</div>
+          <div class="flex gap-4 text-xs text-zinc-500"><span>Official</span><span>1.1M followers</span></div>
+        </div>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 cursor-pointer" onclick="openPage('Matt Grosso')">
+        <div class="h-24 bg-gradient-to-r from-amber-600 to-orange-500 relative">
+          <img src="https://picsum.photos/id/1005/120/120" class="absolute -bottom-6 left-4 w-16 h-16 rounded-full border-4 border-zinc-900 object-cover">
+        </div>
+        <div class="pt-8 px-4 pb-4">
+          <div class="font-bold">Matt Grosso • callmecoffee3</div>
+          <div class="text-xs text-zinc-400 mb-2">DoAShow Lab • The Fam</div>
+          <div class="flex gap-4 text-xs text-zinc-500"><span>Lab Owner</span><span>42k followers</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section id="tab-shop" class="tab-content px-4 pt-4">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold">Shop</h2>
+      <div class="flex items-center gap-1 text-sm"><i class="fas fa-coins coin"></i> <span id="shopCoins">120</span></div>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 text-center">
+        <div class="text-3xl mb-2">💎</div>
+        <div class="font-semibold text-sm">100 Coins</div>
+        <div class="text-xs text-zinc-500 mb-3">$0.99</div>
+        <button onclick="buyItem(100)" class="w-full py-2 bg-pink-500 rounded-xl text-xs font-bold">Buy</button>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 text-center">
+        <div class="text-3xl mb-2">💎💎</div>
+        <div class="font-semibold text-sm">500 Coins</div>
+        <div class="text-xs text-zinc-500 mb-3">$3.99</div>
+        <button onclick="buyItem(500)" class="w-full py-2 bg-pink-500 rounded-xl text-xs font-bold">Buy</button>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 text-center">
+        <div class="text-3xl mb-2">📜</div>
+        <div class="font-semibold text-sm">Script Pack</div>
+        <div class="text-xs text-zinc-500 mb-3">50 coins</div>
+        <button onclick="buyItem(-50,'Script Pack')" class="w-full py-2 bg-zinc-700 rounded-xl text-xs font-bold">Unlock</button>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 text-center">
+        <div class="text-3xl mb-2">🎭</div>
+        <div class="font-semibold text-sm">Actor Pack</div>
+        <div class="text-xs text-zinc-500 mb-3">80 coins</div>
+        <button onclick="buyItem(-80,'Actor Pack')" class="w-full py-2 bg-zinc-700 rounded-xl text-xs font-bold">Unlock</button>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 text-center">
+        <div class="text-3xl mb-2">🏙️</div>
+        <div class="font-semibold text-sm">City Scenes</div>
+        <div class="text-xs text-zinc-500 mb-3">40 coins</div>
+        <button onclick="buyItem(-40,'City Scenes')" class="w-full py-2 bg-zinc-700 rounded-xl text-xs font-bold">Unlock</button>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 text-center">
+        <div class="text-3xl mb-2">🎵</div>
+        <div class="font-semibold text-sm">Music Pack</div>
+        <div class="text-xs text-zinc-500 mb-3">30 coins</div>
+        <button onclick="buyItem(-30,'Music Pack')" class="w-full py-2 bg-zinc-700 rounded-xl text-xs font-bold">Unlock</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MESSENGER -->
+  <section id="tab-messenger" class="tab-content px-0 pt-0">
+    <div class="px-4 py-3 border-b border-zinc-800 flex items-center justify-between">
+      <h2 class="text-xl font-bold">Messenger</h2>
+      <button onclick="showToast('New chat')"><i class="fas fa-edit text-pink-400"></i></button>
+    </div>
+    <div class="divide-y divide-zinc-800">
+      <div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-zinc-900" onclick="openChat('Elena')">
+        <img src="https://picsum.photos/id/64/80/80" class="w-12 h-12 rounded-full object-cover">
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between"><span class="font-semibold text-sm">Elena</span><span class="text-[10px] text-zinc-500">2m</span></div>
+          <div class="text-xs text-zinc-400 truncate">Just posted Ep 1 of Secret Wife 💕</div>
+        </div>
+        <span class="w-2 h-2 bg-pink-500 rounded-full"></span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-zinc-900" onclick="openChat('The Fam')">
+        <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center text-lg">☕</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between"><span class="font-semibold text-sm">The Fam</span><span class="text-[10px] text-zinc-500">1h</span></div>
+          <div class="text-xs text-zinc-400 truncate">Matt: new lab tools dropping soon</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-zinc-900" onclick="openChat('Studio Support')">
+        <div class="w-12 h-12 rounded-full bg-violet-500/20 flex items-center justify-center text-lg">🎬</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between"><span class="font-semibold text-sm">Studio Support</span><span class="text-[10px] text-zinc-500">Yesterday</span></div>
+          <div class="text-xs text-zinc-400 truncate">Your free gens reset tomorrow</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-zinc-900" onclick="openChat('Kane')">
+        <img src="https://picsum.photos/id/91/80/80" class="w-12 h-12 rounded-full object-cover">
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between"><span class="font-semibold text-sm">Mr.Kane</span><span class="text-[10px] text-zinc-500">2d</span></div>
+          <div class="text-xs text-zinc-400 truncate">Collab?</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav flex justify-around py-2 text-[10px]">
+    <button onclick="showTab('home')" class="nav-item active flex flex-col items-center gap-0.5 py-1 px-3" data-tab="home">
+      <i class="fas fa-home text-lg"></i><span>Home</span>
+    </button>
+    <button onclick="showTab('studio')" class="nav-item flex flex-col items-center gap-0.5 py-1 px-3" data-tab="studio">
+      <i class="fas fa-clapperboard text-lg"></i><span>Studio</span>
+    </button>
+    <button onclick="showTab('groups')" class="nav-item flex flex-col items-center gap-0.5 py-1 px-3" data-tab="groups">
+      <i class="fas fa-users text-lg"></i><span>Groups</span>
+    </button>
+    <button onclick="showTab('pages')" class="nav-item flex flex-col items-center gap-0.5 py-1 px-3" data-tab="pages">
+      <i class="fas fa-flag text-lg"></i><span>Pages</span>
+    </button>
+    <button onclick="showTab('shop')" class="nav-item flex flex-col items-center gap-0.5 py-1 px-3" data-tab="shop">
+      <i class="fas fa-store text-lg"></i><span>Shop</span>
+    </button>
+  </nav>
+
+  <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 hidden max-w-[90%]"></div>
+</div>
+
+<script>
+  let coins = 120;
+  let freeGens = 3;
+  let cards = [];
+  let lastDrama = null;
+
+  function showTab(name) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.tab === name);
+    });
+    if (name === 'messenger') {
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.innerHTML = `<div class="toast bg-zinc-800 border border-zinc-700 text-white px-4 py-2.5 rounded-2xl text-sm shadow-xl">${msg}</div>`;
+    t.classList.remove('hidden');
+    setTimeout(() => t.classList.add('hidden'), 2500);
+  }
+
+  function likePost(btn) {
+    const icon = btn.querySelector('i');
+    const span = btn.querySelector('span');
+    if (icon.classList.contains('far')) {
+      icon.classList.replace('far','fas');
+      icon.classList.add('text-pink-500');
+    } else {
+      icon.classList.replace('fas','far');
+      icon.classList.remove('text-pink-500');
+    }
+  }
+
+  function createPost() {
+    showTab('studio');
+    showToast('Create in Studio then Post to Community');
+  }
+
+  function playDrama(title, creator) {
+    showToast(`▶ Playing "${title}" by ${creator}`);
+  }
+
+  function openStory(name) {
+    showToast(`Story: ${name}`);
+  }
+
+  function addCard(type) {
+    const labels = { character: '👤 Character', scene: '🎬 Scene', prop: '💍 Prop', animal: '🐱 Animal', prompt: '✨ Prompt' };
+    const id = Date.now();
+    cards.push({ id, type, text: labels[type] + ' card' });
+    renderCards();
+    showToast(labels[type] + ' added');
+  }
+
+  function renderCards() {
+    const list = document.getElementById('cardList');
+    list.innerHTML = cards.map(c => `
+      <div class="flex items-center gap-2 bg-zinc-800 rounded-xl px-3 py-2 text-xs">
+        <span class="flex-1">${c.text}</span>
+        <button onclick="removeCard(${c.id})" class="text-zinc-500 hover:text-pink-400"><i class="fas fa-times"></i></button>
+      </div>
+    `).join('');
+  }
+
+  function removeCard(id) {
+    cards = cards.filter(c => c.id !== id);
+    renderCards();
+  }
+
+  function newProject() {
+    showToast('New project created: Untitled MicroDrama');
+  }
+
+  async function generateDrama() {
+    if (freeGens <= 0 && coins < 10) {
+      showToast('No free gens left. Buy coins in Shop!');
+      return;
+    }
+    const prompt = document.getElementById('promptInput').value.trim() || 'A heart-warming secret wife romance with a cold CEO';
+    const btn = document.getElementById('generateBtn');
+    const progress = document.getElementById('genProgress');
+    const result = document.getElementById('videoResult');
+
+    result.classList.add('hidden');
+    progress.classList.remove('hidden');
+    btn.disabled = true;
+    btn.classList.add('opacity-60');
+
+    document.querySelectorAll('#steps > div').forEach((el, i) => {
+      el.className = 'flex items-center gap-3 text-zinc-500';
+      el.querySelector('div').className = 'w-6 h-6 rounded-full border border-zinc-600 flex items-center justify-center text-xs';
+      el.querySelector('div').textContent = i + 1;
+    });
+    document.getElementById('pBar').style.width = '0%';
+    document.getElementById('pText').textContent = '0%';
+
+    const delays = [1200, 1500, 1800, 1400];
+    for (let i = 0; i < 4; i++) {
+      const step = document.querySelector(`#steps > div[data-step="${i+1}"]`);
+      step.classList.add('text-pink-400');
+      step.querySelector('div').classList.add('border-pink-500');
+      await new Promise(r => setTimeout(r, delays[i]));
+      step.classList.remove('text-pink-400');
+      step.classList.add('text-green-400');
+      const circle = step.querySelector('div');
+      circle.className = 'w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-xs text-white';
+      circle.innerHTML = '<i class="fas fa-check text-[10px]"></i>';
+      const pct = ((i + 1) / 4) * 100;
+      document.getElementById('pBar').style.width = pct + '%';
+      document.getElementById('pText').textContent = Math.round(pct) + '%';
+    }
+
+    await new Promise(r => setTimeout(r, 400);
+    progress.classList.add('hidden');
+    result.classList.remove('hidden');
+
+    const title = prompt.length > 40 ? prompt.slice(0, 40) + '…' : prompt;
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultPrompt').textContent = prompt;
+    document.getElementById('resultPoster').src = `https://picsum.photos/id/${200 + Math.floor(Math.random()*50)}/400/700`;
+
+    lastDrama = { title, prompt, cards: [...cards] };
+
+    if (freeGens > 0) {
+      freeGens--;
+      document.getElementById('freeLeft').textContent = freeGens;
+    } else {
+      coins -= 10;
+      updateCoins();
+    }
+
+    btn.disabled = false;
+    btn.classList.remove('opacity-60');
+    showToast('✅ Micro drama ready!');
+  }
+
+  function resetStudio() {
+    document.getElementById('videoResult').classList.add('hidden');
+    document.getElementById('genProgress').classList.add('hidden');
+    document.getElementById('promptInput').value = '';
+    cards = [];
+    renderCards();
+  }
+
+  function publishDrama() {
+    if (!lastDrama) return;
+    showToast('Posted to Community feed 🎉');
+    showTab('home');
+    const feed = document.getElementById('feed');
+    const article = document.createElement('article');
+    article.className = 'bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800';
+    article.innerHTML = `
+      <div class="flex items-center gap-3 p-3">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-pink-500 to-violet-600 flex items-center justify-center text-xs font-bold">MG</div>
+        <div class="flex-1">
+          <div class="font-semibold text-sm">You • <span class="text-pink-400 text-xs">Just now</span></div>
+          <div class="text-[10px] text-zinc-500">Your micro drama</div>
+        </div>
+      </div>
+      <div class="relative vertical-preview mx-3 rounded-xl overflow-hidden">
+        <img src="${document.getElementById('resultPoster').src}" class="w-full h-full object-cover">
+        <div class="absolute inset-0 flex items-center justify-center bg-black/30">
+          <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center"><i class="fas fa-play text-2xl"></i></div>
+        </div>
+      </div>
+      <div class="p-3">
+        <p class="text-sm mb-2">${lastDrama.title}</p>
+        <div class="flex items-center gap-5 text-sm text-zinc-400">
+          <button onclick="likePost(this)"><i class="far fa-heart"></i> <span>0</span></button>
+          <button><i class="far fa-comment"></i> 0</button>
+        </div>
+      </div>`;
+    feed.prepend(article);
+  }
+
+  function updateCoins() {
+    document.getElementById('shopCoins').textContent = coins;
+    document.getElementById('coinBadge').textContent = coins;
+  }
+
+  function buyItem(amount, name) {
+    if (amount > 0) {
+      coins += amount;
+      updateCoins();
+      showToast(`+${amount} coins added!`);
+    } else {
+      if (coins + amount < 0) {
+        showToast('Not enough coins');
+        return;
+      }
+      coins += amount;
+      updateCoins();
+      showToast(`${name || 'Item'} unlocked!`);
+    }
+  }
+
+  function openGroup(name) { showToast(`Joined ${name}`); }
+  function openPage(name) { showToast(`Opening page: ${name}`); }
+  function openChat(name) { showToast(`Chat with ${name}`); }
+
+  updateCoins();
+</script>
+</body>
+</html>
