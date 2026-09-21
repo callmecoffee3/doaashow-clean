@@ -1,0 +1,32 @@
+{
+  "updated": "2026-09-21",
+  "projects": [
+    {
+      "id": "whispers-in-the-wind",
+      "title": "Whispers in the Wind",
+      "type": "micro-drama",
+      "status": "active",
+      "path": "03-production/projects/whispers-in-the-wind.md"
+    },
+    {
+      "id": "secret-wife-romance",
+      "title": "Secret Wife Romance",
+      "type": "micro-drama",
+      "status": "sample",
+      "path": "03-production/projects/secret-wife-romance.md"
+    },
+    {
+      "id": "reelwave",
+      "title": "ReelWave Micro Dramas",
+      "type": "studio-platform",
+      "status": "active",
+      "path": "03-production/reelwave-studio/"
+    }
+  ],
+  "rules": {
+    "maxCards": 100,
+    "maxCharsPerCard": 500,
+    "titleRequired": true,
+    "titleNote": "User or project can set the title"
+  }
+}
