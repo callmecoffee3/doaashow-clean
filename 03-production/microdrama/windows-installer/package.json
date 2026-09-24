@@ -1,0 +1,54 @@
+{
+  "name": "microdrama-lab",
+  "version": "1.0.0",
+  "description": "MicroDrama Lab — Community, Creators, Writers, AI Studio",
+  "main": "main.js",
+  "author": "Matt Grosso / doaashow",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.doaashow.microdramalab",
+    "productName": "MicroDrama Lab",
+    "copyright": "Copyright © 2026 Matt Grosso / doaashow",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "app/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "artifactName": "MicroDramaLab-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MicroDrama Lab",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "MicroDramaLab-Portable-${version}.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}
