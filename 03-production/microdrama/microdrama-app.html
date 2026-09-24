@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroDrama • Community + Creators + Writers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.9)),
+                  url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat;
+    }
+    .drama-card, .feed-card, .creator-card, .script-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .drama-card:hover, .feed-card:hover, .creator-card:hover, .script-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -12px rgb(0 0 0 / 0.45);
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    .nav-link.active { color: #ec4899; }
+    .toast { animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .step-active { color: #ec4899; }
+    .step-done { color: #22c55e; }
+    .progress-bar { transition: width 0.6s ease; }
+    .tab-btn.active { background: linear-gradient(to right, #ec4899, #8b5cf6); color: white; }
+    .feed-avatar { background: linear-gradient(135deg, #ec4899, #8b5cf6); }
+    .like-btn.liked { color: #ec4899; }
+    .badge-new { animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-white antialiased">
+
+  <!-- Navbar -->
+  <nav class="bg-black/90 backdrop-blur-md border-b border-zinc-800 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('home')">
+        <span class="text-3xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 bg-clip-text text-transparent">μ</span>
+        <div>
+          <span class="text-xl sm:text-2xl font-bold tracking-tight">MicroDrama</span>
+          <span class="text-[10px] tracking-widest text-pink-400 block -mt-1">LAB</span>
+        </div>
+      </div>
+      <div class="hidden md:flex gap-6 text-sm font-medium">
+        <a href="#" class="nav-link hover:text-pink-400 transition" data-page="home" onclick="navigate('home')">Home</a>
+        <a href="#" class="nav-link hover:text-pink-400 transition" data-page="feed" onclick="navigate('feed')">Community</a>
+        <a href="#" class="nav-link hover:text-pink-400 transition" data-page="creators" onclick="navigate('creators')">Creators</a>
+        <a href="#" class="nav-link hover:text-pink-400 transition" data-page="writers" onclick="navigate('writers')">Writers</a>
+        <a href="#" class="nav-link hover:text-pink-400 transition" data-page="studio" onclick="navigate('studio')">AI Studio</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="showToast('Search coming soon 🔍')" class="p-2.5 bg-zinc-900 hover:bg-zinc-800 rounded-xl transition">
+          <i class="fas fa-search text-sm"></i>
+        </button>
+        <button onclick="showToast('Sign in coming soon ✨')" class="px-4 py-2 bg-white text-black rounded-xl font-semibold text-sm hover:bg-pink-500 hover:text-white transition">
+          Sign In
+        </button>
+        <button id="mobileMenuBtn" class="md:hidden p-2.5 bg-zinc-900 rounded-xl" onclick="toggleMobileMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="hidden md:hidden border-t border-zinc-800 px-4 py-3 space-y-2">
+      <a href="#" class="block py-2 hover:text-pink-400" onclick="navigate('home'); toggleMobileMenu()">Home</a>
+      <a href="#" class="block py-2 hover:text-pink-400" onclick="navigate('feed'); toggleMobileMenu()">Community Feed</a>
+      <a href="#" class="block py-2 hover:text-pink-400" onclick="navigate('creators'); toggleMobileMenu()">Creators Corner</a>
+      <a href="#" class="block py-2 hover:text-pink-400" onclick="navigate('writers'); toggleMobileMenu()">Writers Corner</a>
+      <a href="#" class="block py-2 hover:text-pink-400" onclick="navigate('studio'); toggleMobileMenu()">AI Studio</a>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <section class="hero-bg min-h-[70vh] flex items-center">
+      <div class="max-w-5xl mx-auto text-center px-6 py-16">
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold leading-tight mb-6">
+          Big Drama.<br>Small Screen.
+        </h1>
+        <p class="text-lg sm:text-xl text-zinc-300 mb-10 max-w-2xl mx-auto">
+          Watch, create, collaborate. Micro dramas + community + writers + creators — all in one lab.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button onclick="navigate('studio')" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl text-lg font-bold flex items-center justify-center gap-3 hover:scale-[1.03] transition shadow-lg shadow-pink-500/20">
+            <i class="fas fa-bolt"></i> Create with AI
+          </button>
+          <button onclick="navigate('feed')" class="px-8 py-4 border-2 border-white/50 rounded-2xl text-lg font-medium hover:bg-white/10 transition">
+            Join Community
+          </button>
+        </div>
+        <p class="mt-8 text-zinc-400 text-sm">🎬 Community feed • 🎥 Creators corner • ✍️ Writers corner</p>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-5 py-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 cursor-pointer hover:border-pink-500/50 transition" onclick="navigate('feed')">
+        <div class="text-3xl mb-3">💬</div>
+        <h3 class="text-xl font-bold mb-2">Community Feed</h3>
+        <p class="text-zinc-400 text-sm">Reactions, clips, theories, and drama talk from the community.</p>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 cursor-pointer hover:border-pink-500/50 transition" onclick="navigate('creators')">
+        <div class="text-3xl mb-3">🎥</div>
+        <h3 class="text-xl font-bold mb-2">Creators Corner</h3>
+        <p class="text-zinc-400 text-sm">Upload, series dashboards, collab requests, and creator tools.</p>
+      </div>
+      <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 cursor-pointer hover:border-pink-500/50 transition" onclick="navigate('writers')">
+        <div class="text-3xl mb-3">✍️</div>
+        <h3 class="text-xl font-bold mb-2">Writers Corner</h3>
+        <p class="text-zinc-400 text-sm">Script boards, logline labs, tropes, and feedback loops.</p>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-5 pb-16">
+      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">🔥 Trending Micro Dramas</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="homeTrending"></div>
+    </section>
+  </div>
+
+  <!-- COMMUNITY FEED -->
+  <div id="page-feed" class="page">
+    <div class="max-w-3xl mx-auto px-4 py-8">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold">Community Feed</h1>
+        <button onclick="showToast('Compose post coming soon 📝')" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 rounded-xl text-sm font-semibold">
+          <i class="fas fa-plus mr-1"></i> Post
+        </button>
+      </div>
+
+      <div class="flex gap-2 mb-6 overflow-x-auto pb-1">
+        <button class="tab-btn active px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-feed="all" onclick="filterFeed('all')">All</button>
+        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-feed="clips" onclick="filterFeed('clips')">Clips</button>
+        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-feed="theories" onclick="filterFeed('theories')">Theories</button>
+        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-feed="collabs" onclick="filterFeed('collabs')">Collabs</button>
+      </div>
+
+      <div class="bg-zinc-900 rounded-2xl p-4 mb-6 border border-zinc-800 flex gap-3 items-center cursor-pointer" onclick="showToast('Sign in to post ✨')">
+        <div class="w-10 h-10 rounded-full feed-avatar flex items-center justify-center font-bold">You</div>
+        <div class="flex-1 text-zinc-500 text-sm">Share a clip, theory, or collab ask...</div>
+      </div>
+
+      <div id="feedList" class="space-y-5"></div>
+    </div>
+  </div>
+
+  <!-- CREATORS CORNER -->
+  <div id="page-creators" class="page">
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-3xl font-bold">Creators Corner</h1>
+          <p class="text-zinc-400 mt-1">Series, uploads, collabs, and creator tools</p>
+        </div>
+        <button onclick="showToast('Upload flow coming soon 🎬')" class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl font-semibold text-sm">
+          <i class="fas fa-cloud-upload-alt mr-2"></i> Upload Episode
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-zinc-900 rounded-2xl p-5 border border-zinc-800">
+          <div class="text-zinc-400 text-xs uppercase tracking-wider mb-1">Your Series</div>
+          <div class="text-2xl font-bold">3</div>
+        </div>
+        <div class="bg-zinc-900 rounded-2xl p-5 border border-zinc-800">
+          <div class="text-zinc-400 text-xs uppercase tracking-wider mb-1">Total Views</div>
+          <div class="text-2xl font-bold">128.4K</div>
+        </div>
+        <div class="bg-zinc-900 rounded-2xl p-5 border border-zinc-800">
+          <div class="text-zinc-400 text-xs uppercase tracking-wider mb-1">Collab Requests</div>
+          <div class="text-2xl font-bold text-pink-400">5</div>
+        </div>
+        <div class="bg-zinc-900 rounded-2xl p-5 border border-zinc-800">
+          <div class="text-zinc-400 text-xs uppercase tracking-wider mb-1">Coins Earned</div>
+          <div class="text-2xl font-bold">2,450</div>
+        </div>
+      </div>
+
+      <div class="flex gap-2 mb-6 overflow-x-auto">
+        <button class="tab-btn active px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-creator-tab="series" onclick="filterCreators('series')">My Series</button>
+        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-creator-tab="collabs" onclick="filterCreators('collabs')">Open Collabs</button>
+        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-creator-tab="tools" onclick="filterCreators('tools')">Tools</button>
+      </div>
+
+      <div id="creatorsContent"></div>
+    </div>
+  </div>
+
+  <!-- WRITERS CORNER -->
+  <div id="page-writers" class="page">
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-3xl font-bold">Writers Corner</h1>
+          <p class="text-zinc-400 mt-1">Loglines, scripts, tropes, and feedback</p>
+        </div>
+        <button onclick="showToast('New script board coming soon ✍️')" class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl font-semibold text-sm">
+          <i class="fas fa-pen-fancy mr-2"></i> New Script
+        </button>
+      </div>
+
+      <div class="flex gap-2 mb-6 overflow-x-auto">
+        <button class="tab-btn active px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-writer-tab="boards" onclick="filterWriters('boards')">Script Boards</button>
+        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-writer-tab="loglines" onclick="filterWriters('loglines')">Logline Lab</button>
+        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-writer-tab="tropes" onclick="filterWriters('tropes')">Trope Library</button>
+        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-zinc-800" data-writer-tab="feedback" onclick="filterWriters('feedback')">Feedback</button>
+      </div>
+
+      <div id="writersContent"></div>
+    </div>
+  </div>
+
+  <!-- AI STUDIO -->
+  <div id="page-studio" class="page">
+    <div class="max-w-3xl mx-auto px-5 py-12 text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">AI Drama Studio</h1>
+      <p class="text-lg text-zinc-400 mb-10">Prompt → script → vertical micro drama in under a minute.</p>
+
+      <div class="bg-black rounded-3xl p-6 sm:p-10 border border-zinc-800 text-left">
+        <textarea id="promptInput" rows="4"
+          class="w-full bg-zinc-950 border border-zinc-700 rounded-2xl p-5 text-base resize-none focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500/50 transition placeholder:text-zinc-600"
+          placeholder="A poor girl falls in love with a cold CEO who turns out to be her childhood savior..."></textarea>
+
+        <div class="flex flex-wrap gap-3 mt-4 text-sm">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="includeCards" class="rounded border-zinc-600 bg-zinc-900 text-pink-500 focus:ring-pink-500">
+            <span class="text-zinc-400">Include active project cards</span>
+          </label>
+        </div>
+
+        <button id="generateBtn" onclick="generateDrama()"
+          class="mt-6 w-full py-5 text-lg font-bold bg-gradient-to-r from-pink-500 to-violet-600 rounded-2xl hover:brightness-110 active:scale-[0.98] transition flex items-center justify-center gap-3 shadow-lg shadow-pink-500/20">
+          <i class="fas fa-magic"></i>
+          <span id="btnText">GENERATE MY MICRO DRAMA</span>
+        </button>
+        <p class="text-xs text-zinc-500 mt-4 text-center">Demo mode • Simulated generation • Real API later</p>
+      </div>
+
+      <div id="generationProgress" class="hidden mt-10 bg-black rounded-3xl p-8 border border-zinc-800 text-left">
+        <h3 class="text-xl font-bold mb-6 text-center">Creating your micro drama...</h3>
+        <div class="space-y-5 mb-8">
+          <div id="step1" class="flex items-center gap-4 text-zinc-500">
+            <div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">1</div>
+            <span>Writing script & dialogue</span>
+          </div>
+          <div id="step2" class="flex items-center gap-4 text-zinc-500">
+            <div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">2</div>
+            <span>Casting AI actors</span>
+          </div>
+          <div id="step3" class="flex items-center gap-4 text-zinc-500">
+            <div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">3</div>
+            <span>Filming scenes</span>
+          </div>
+          <div id="step4" class="flex items-center gap-4 text-zinc-500">
+            <div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">4</div>
+            <span>Editing & rendering video</span>
+          </div>
+        </div>
+        <div class="w-full bg-zinc-800 rounded-full h-2.5 mb-2">
+          <div id="progressBar" class="progress-bar bg-gradient-to-r from-pink-500 to-violet-500 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        <p id="progressText" class="text-sm text-zinc-400 text-center">0%</p>
+      </div>
+
+      <div id="videoResult" class="hidden mt-10">
+        <div class="bg-black rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
+          <div class="relative bg-black aspect-[9/16] max-h-[70vh] mx-auto">
+            <video id="dramaVideo" class="w-full h-full object-cover" controls playsinline loop
+                   poster="https://picsum.photos/id/201/600/900">
+              <source src="https://cdn.truefilesize.com/mp4/sample-portrait.mp4" type="video/mp4">
+            </video>
+            <div class="absolute top-4 left-4 right-4 flex justify-between items-start pointer-events-none">
+              <div class="bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-medium">MICRODRAMA LAB</div>
+              <div class="bg-pink-500/90 px-3 py-1.5 rounded-full text-xs font-bold badge-new">NEW</div>
+            </div>
+          </div>
+          <div class="p-6 text-left">
+            <h3 id="dramaTitle" class="text-xl font-bold mb-2">Your Custom Micro Drama</h3>
+            <p id="dramaPrompt" class="text-zinc-400 text-sm mb-5 line-clamp-2"></p>
+            <div class="flex gap-3">
+              <button onclick="document.getElementById('dramaVideo').play()" class="flex-1 py-3 bg-pink-500 hover:bg-pink-600 rounded-xl font-semibold transition flex items-center justify-center gap-2">
+                <i class="fas fa-play"></i> Play
+              </button>
+              <button onclick="resetStudio()" class="flex-1 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl font-semibold transition">
+                Generate Another
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-black border-t border-zinc-900 py-10 text-center text-zinc-500">
+    <p class="text-lg font-medium text-white mb-1">MicroDrama Lab</p>
+    <p class="text-sm">Community • Creators • Writers • AI Studio</p>
+    <p class="text-xs mt-3">© 2026 • Built in the doaashow lab by Matt Grosso energy</p>
+  </footer>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden"></div>
+
+  <script>
+    const trendingDramas = [
+      { title: "My Boss's Secret Wife", genre: "Romance", views: "1.4M", img: 201, duration: "2:45" },
+      { title: "The Fake Heiress", genre: "Revenge", views: "Trending", img: 237, duration: "3:12" },
+      { title: "Midnight Contract", genre: "Thriller", views: "890K", img: 180, duration: "1:58" },
+      { title: "I Married My AI Boyfriend", genre: "Comedy", views: "2.1M", img: 251, duration: "2:30" }
+    ];
+
+    const feedPosts = [
+      { id: 1, type: "clips", user: "DramaQueen88", avatar: "DQ", time: "12m", text: "That cold CEO soft moment in ep 47 hit different 😭 Who else cried?", likes: 342, comments: 58, tag: "clip" },
+      { id: 2, type: "theories", user: "PlotTwistPete", avatar: "PT", time: "34m", text: "Theory: the black cat is actually the real heir. Look at the collar in ep 12 vs ep 60.", likes: 189, comments: 41, tag: "theory" },
+      { id: 3, type: "collabs", user: "VerticalVision", avatar: "VV", time: "1h", text: "Looking for a writer for a 60-ep contract marriage series. Romance + light thriller. DM if interested.", likes: 67, comments: 23, tag: "collab" },
+      { id: 4, type: "clips", user: "ReelShortFan", avatar: "RS", time: "2h", text: "Just finished the whole season of Fake Heiress in one sitting. Sleep is optional.", likes: 512, comments: 89, tag: "clip" },
+      { id: 5, type: "theories", user: "MicroMind", avatar: "MM", time: "3h", text: "Anyone else notice the rain always falls when Elena is about to make a big decision?", likes: 94, comments: 17, tag: "theory" },
+      { id: 6, type: "collabs", user: "StudioShorts", avatar: "SS", time: "5h", text: "Need a voice actor for cold CEO archetype. Vertical micro drama, paid. Drop reels.", likes: 41, comments: 12, tag: "collab" }
+    ];
+
+    const mySeries = [
+      { title: "Secret Wife Romance", eps: 48, status: "Ongoing", views: "42.1K", cover: 201 },
+      { title: "Midnight Contract", eps: 12, status: "Draft", views: "—", cover: 180 },
+      { title: "AI Boyfriend Arc", eps: 6, status: "Complete", views: "86.3K", cover: 251 }
+    ];
+
+    const openCollabs = [
+      { role: "Writer", title: "Contract Marriage 60-ep", by: "VerticalVision", genre: "Romance/Thriller" },
+      { role: "Editor", title: "Revenge Heiress Season 2", by: "ReelLab", genre: "Revenge" },
+      { role: "Actor (CEO type)", title: "Cold Boss Soft Heart", by: "StudioShorts", genre: "Romance" }
+    ];
+
+    const scriptBoards = [
+      { title: "Secret Wife — Act 3 Outline", status: "In Progress", cards: 14, updated: "2h ago" },
+      { title: "Midnight Contract — Full Script", status: "Feedback", cards: 62, updated: "1d ago" },
+      { title: "New Logline Dump", status: "Ideas", cards: 8, updated: "3d ago" }
+    ];
+
+    const loglines = [
+      { text: "A poor secretary discovers her cold CEO husband is the boy who saved her life ten years ago.", genre: "Romance" },
+      { text: "A fake heiress must keep the lie alive when the real family returns — and the CEO falls for her.", genre: "Revenge" },
+      { text: "She signs a midnight contract to save her sister. He only wants an heir. Neither planned on love.", genre: "Thriller/Romance" }
+    ];
+
+    const tropes = [
+      { name: "Contract Marriage", heat: "🔥🔥🔥", uses: "Very High" },
+      { name: "Cold CEO / Soft Heart", heat: "🔥🔥🔥", uses: "Very High" },
+      { name: "Fake Heiress / Hidden Identity", heat: "🔥🔥", uses: "High" },
+      { name: "Childhood Savior Reveal", heat: "🔥🔥", uses: "High" },
+      { name: "Black Cat Companion", heat: "🔥", uses: "Rising" },
+      { name: "Rain = Big Decision", heat: "🔥", uses: "Rising" }
+    ];
+
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(l => {
+        l.classList.toggle('active', l.dataset.page === page);
+      });
+      window.scrollTo(0, 0);
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileNav').classList.toggle('hidden');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerHTML = `<div class="toast bg-zinc-900 border border-zinc-700 text-white px-6 py-3.5 rounded-2xl shadow-xl text-sm font-medium max-w-sm text-center">${message}</div>`;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2800);
+    }
+
+    function renderHomeTrending() {
+      const el = document.getElementById('homeTrending');
+      el.innerHTML = trendingDramas.map(d => `
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="navigate('studio'); showToast('Playing: ${d.title}')">
+          <div class="relative">
+            <img src="https://picsum.photos/id/${d.img}/400/600" alt="${d.title}" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition">
+            <div class="absolute top-2 right-2 bg-black/75 backdrop-blur-sm px-2 py-0.5 text-xs rounded-full">${d.duration}</div>
+          </div>
+          <div class="p-3">
+            <div class="text-pink-400 text-xs font-medium">${d.genre} • ${d.views}</div>
+            <h3 class="font-bold text-sm mt-1 leading-snug line-clamp-2">${d.title}</h3>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    let currentFeedFilter = 'all';
+    function filterFeed(type) {
+      currentFeedFilter = type;
+      document.querySelectorAll('[data-feed]').forEach(b => {
+        b.classList.toggle('active', b.dataset.feed === type);
+      });
+      renderFeed();
+    }
+
+    function renderFeed() {
+      const list = document.getElementById('feedList');
+      const filtered = currentFeedFilter === 'all' ? feedPosts : feedPosts.filter(p => p.type === currentFeedFilter);
+      list.innerHTML = filtered.map(p => `
+        <div class="feed-card bg-zinc-900 rounded-2xl p-5 border border-zinc-800">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full feed-avatar flex items-center justify-center text-sm font-bold shrink-0">${p.avatar}</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-semibold">${p.user}</span>
+                <span class="text-zinc-500 text-xs">${p.time}</span>
+                <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-zinc-800 text-pink-400">${p.tag}</span>
+              </div>
+              <p class="mt-2 text-sm text-zinc-200 leading-relaxed">${p.text}</p>
+              <div class="flex gap-5 mt-4 text-sm text-zinc-400">
+                <button class="like-btn hover:text-pink-400 transition" onclick="this.classList.toggle('liked'); this.querySelector('span').textContent = this.classList.contains('liked') ? ${p.likes + 1} : ${p.likes}">
+                  <i class="far fa-heart mr-1"></i><span>${p.likes}</span>
+                </button>
+                <button class="hover:text-pink-400 transition" onclick="showToast('Comments coming soon')">
+                  <i class="far fa-comment mr-1"></i>${p.comments}
+                </button>
+                <button class="hover:text-pink-400 transition" onclick="showToast('Share coming soon')">
+                  <i class="fas fa-share mr-1"></i>Share
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    let currentCreatorTab = 'series';
+    function filterCreators(tab) {
+      currentCreatorTab = tab;
+      document.querySelectorAll('[data-creator-tab]').forEach(b => {
+        b.classList.toggle('active', b.dataset.creatorTab === tab);
+      });
+      renderCreators();
+    }
+
+    function renderCreators() {
+      const el = document.getElementById('creatorsContent');
+      if (currentCreatorTab === 'series') {
+        el.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            ${mySeries.map(s => `
+              <div class="creator-card bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 cursor-pointer" onclick="showToast('Opening series dashboard')">
+                <img src="https://picsum.photos/id/${s.cover}/600/400" class="w-full h-36 object-cover">
+                <div class="p-4">
+                  <h3 class="font-bold">${s.title}</h3>
+                  <div class="flex justify-between text-xs text-zinc-400 mt-2">
+                    <span>${s.eps} eps • ${s.status}</span>
+                    <span>${s.views} views</span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (currentCreatorTab === 'collabs') {
+        el.innerHTML = `
+          <div class="space-y-4">
+            ${openCollabs.map(c => `
+              <div class="creator-card bg-zinc-900 rounded-2xl p-5 border border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div class="text-xs text-pink-400 uppercase tracking-wider mb-1">${c.role}</div>
+                  <h3 class="font-bold">${c.title}</h3>
+                  <p class="text-sm text-zinc-400 mt-1">by ${c.by} • ${c.genre}</p>
+                </div>
+                <button onclick="showToast('Request sent!')" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 rounded-xl text-sm font-semibold shrink-0">
+                  Apply
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        el.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 cursor-pointer hover:border-pink-500/40" onclick="showToast('Thumbnail generator coming soon')">
+              <div class="text-2xl mb-2">🖼️</div>
+              <h3 class="font-bold">Thumbnail Generator</h3>
+              <p class="text-sm text-zinc-400 mt-1">AI covers for your vertical episodes</p>
+            </div>
+            <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 cursor-pointer hover:border-pink-500/40" onclick="showToast('Episode scheduler coming soon')">
+              <div class="text-2xl mb-2">📅</div>
+              <h3 class="font-bold">Episode Scheduler</h3>
+              <p class="text-sm text-zinc-400 mt-1">Plan daily drops and cliffhangers</p>
+            </div>
+            <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 cursor-pointer hover:border-pink-500/40" onclick="showToast('Analytics coming soon')">
+              <div class="text-2xl mb-2">📊</div>
+              <h3 class="font-bold">Series Analytics</h3>
+              <p class="text-sm text-zinc-400 mt-1">Views, drop-off, coin conversion</p>
+            </div>
+            <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 cursor-pointer hover:border-pink-500/40" onclick="navigate('studio')">
+              <div class="text-2xl mb-2">⚡</div>
+              <h3 class="font-bold">AI Studio</h3>
+              <p class="text-sm text-zinc-400 mt-1">Generate a new episode from prompt</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    let currentWriterTab = 'boards';
+    function filterWriters(tab) {
+      currentWriterTab = tab;
+      document.querySelectorAll('[data-writer-tab]').forEach(b => {
+        b.classList.toggle('active', b.dataset.writerTab === tab);
+      });
+      renderWriters();
+    }
+
+    function renderWriters() {
+      const el = document.getElementById('writersContent');
+      if (currentWriterTab === 'boards') {
+        el.innerHTML = `
+          <div class="space-y-4">
+            ${scriptBoards.map(b => `
+              <div class="script-card bg-zinc-900 rounded-2xl p-5 border border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer" onclick="showToast('Opening board: ${b.title}')">
+                <div>
+                  <h3 class="font-bold">${b.title}</h3>
+                  <p class="text-sm text-zinc-400 mt-1">${b.cards} cards • Updated ${b.updated}</p>
+                </div>
+                <span class="text-xs px-3 py-1 rounded-full bg-zinc-800 text-pink-400">${b.status}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (currentWriterTab === 'loglines') {
+        el.innerHTML = `
+          <div class="space-y-4">
+            ${loglines.map(l => `
+              <div class="script-card bg-zinc-900 rounded-2xl p-5 border border-zinc-800">
+                <div class="text-xs text-pink-400 uppercase tracking-wider mb-2">${l.genre}</div>
+                <p class="text-sm leading-relaxed">"${l.text}"</p>
+                <div class="flex gap-3 mt-4">
+                  <button onclick="document.getElementById('promptInput').value='${l.text.replace(/'/g, "\\'")}'; navigate('studio'); showToast('Logline sent to AI Studio')" class="text-xs px-3 py-1.5 bg-pink-500/20 text-pink-400 rounded-lg hover:bg-pink-500/30">Use in Studio</button>
+                  <button onclick="showToast('Saved to board')" class="text-xs px-3 py-1.5 bg-zinc-800 rounded-lg hover:bg-zinc-700">Save</button>
+                </div>
+              </div>
+            `).join('')}
+            <button onclick="showToast('Add your own logline coming soon')" class="w-full py-4 border border-dashed border-zinc-700 rounded-2xl text-zinc-400 hover:border-pink-500/50 hover:text-pink-400 transition text-sm">
+              + Add Logline
+            </button>
+          </div>
+        `;
+      } else if (currentWriterTab === 'tropes') {
+        el.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            ${tropes.map(t => `
+              <div class="script-card bg-zinc-900 rounded-2xl p-5 border border-zinc-800">
+                <div class="flex justify-between items-start">
+                  <h3 class="font-bold">${t.name}</h3>
+                  <span class="text-sm">${t.heat}</span>
+                </div>
+                <p class="text-xs text-zinc-400 mt-2">Usage: ${t.uses}</p>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        el.innerHTML = `
+          <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 text-center">
+            <div class="text-4xl mb-3">💬</div>
+            <h3 class="font-bold text-lg mb-2">Feedback Loop</h3>
+            <p class="text-sm text-zinc-400 mb-6 max-w-md mx-auto">Share a scene or full script board with the community for notes, trope checks, and cliffhanger votes.</p>
+            <button onclick="showToast('Feedback requests coming soon')" class="px-6 py-3 bg-pink-500 hover:bg-pink-600 rounded-xl font-semibold text-sm">
+              Request Feedback
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function setStep(stepNum, status) {
+      const step = document.getElementById(`step${stepNum}`);
+      const circle = step.querySelector('div');
+      step.classList.remove('text-zinc-500', 'step-active', 'step-done');
+      circle.classList.remove('border-zinc-600', 'border-pink-500', 'bg-pink-500', 'border-green-500', 'bg-green-500', 'text-white');
+      if (status === 'active') {
+        step.classList.add('step-active');
+        circle.classList.add('border-pink-500', 'text-pink-400');
+      } else if (status === 'done') {
+        step.classList.add('step-done');
+        circle.classList.add('border-green-500', 'bg-green-500', 'text-white');
+        circle.innerHTML = '<i class="fas fa-check text-xs"></i>';
+      }
+    }
+
+    async function generateDrama() {
+      const prompt = document.getElementById("promptInput").value.trim();
+      const btn = document.getElementById("generateBtn");
+      const btnText = document.getElementById("btnText");
+      const progressBox = document.getElementById("generationProgress");
+      const videoResult = document.getElementById("videoResult");
+      const progressBar = document.getElementById("progressBar");
+      const progressText = document.getElementById("progressText");
+
+      videoResult.classList.add('hidden');
+      progressBox.classList.remove('hidden');
+
+      for (let i = 1; i <= 4; i++) {
+        const step = document.getElementById(`step${i}`);
+        step.className = 'flex items-center gap-4 text-zinc-500';
+        const circle = step.querySelector('div');
+        circle.className = 'w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold';
+        circle.textContent = i;
+      }
+      progressBar.style.width = '0%';
+      progressText.textContent = '0%';
+
+      btn.disabled = true;
+      btn.classList.add('opacity-70', 'cursor-not-allowed');
+      btnText.textContent = "Generating...";
+
+      const steps = [
+        { num: 1, delay: 1600, progress: 25 },
+        { num: 2, delay: 2000, progress: 50 },
+        { num: 3, delay: 2400, progress: 78 },
+        { num: 4, delay: 2200, progress: 100 }
+      ];
+
+      for (const step of steps) {
+        setStep(step.num, 'active');
+        await new Promise(r => setTimeout(r, step.delay));
+        setStep(step.num, 'done');
+        progressBar.style.width = step.progress + '%';
+        progressText.textContent = step.progress + '%';
+      }
+
+      await new Promise(r => setTimeout(r, 500);
+      progressBox.classList.add('hidden');
+      videoResult.classList.remove('hidden');
+
+      const title = prompt ? (prompt.length > 55 ? prompt.substring(0, 55) + '...' : prompt) : "Surprise Romantic Micro Drama";
+      document.getElementById('dramaTitle').textContent = title;
+      document.getElementById('dramaPrompt').textContent = prompt || "A heart-warming AI-generated story of unexpected love.";
+
+      const video = document.getElementById('dramaVideo');
+      video.currentTime = 0;
+      video.play().catch(() => showToast("Click play to start your drama 🎬"));
+
+      btn.disabled = false;
+      btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      btnText.textContent = "GENERATE MY MICRO DRAMA";
+      showToast("✅ Your micro drama is ready!");
+    }
+
+    function resetStudio() {
+      document.getElementById('videoResult').classList.add('hidden');
+      document.getElementById('generationProgress').classList.add('hidden');
+      document.getElementById('promptInput').value = '';
+      document.getElementById('generateBtn').disabled = false;
+      document.getElementById('btnText').textContent = 'GENERATE MY MICRO DRAMA';
+      document.getElementById('generateBtn').classList.remove('opacity-70', 'cursor-not-allowed');
+    }
+
+    renderHomeTrending();
+    renderFeed();
+    renderCreators();
+    renderWriters();
+  </script>
+</body>
+</html>
