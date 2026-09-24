@@ -2,80 +2,58 @@
 
 **Date:** 2026-09-24  
 **Agent:** Matt Grosso Agent (doaashow-lab)  
-**Request:** micro drama app with community feed, and creators corner, writers corner
+**Request:** micro drama app with community feed, creators corner, writers corner → Windows installer
 
 ---
 
 ## What was built
 
-Enhanced the existing MicroDrama AI prototype into a full **MicroDrama Lab** single-file web app with four main areas:
+### App
+Full **MicroDrama Lab** single-file web app:
 
-1. **Community Feed** — posts (clips, theories, collabs), filter tabs, likes/comments/share demos, composer tease
-2. **Creators Corner** — series dashboard, stats (series / views / collab requests / coins), open collabs board, tools (thumbnail, scheduler, analytics, link to AI Studio)
-3. **Writers Corner** — script boards, logline lab (Use in Studio), trope library with heat ratings, feedback loop placeholder
-4. **AI Studio** — free-form prompt → simulated 4-step generation → vertical 9:16 video player
+1. **Community Feed** — clips, theories, collabs
+2. **Creators Corner** — series, stats, collabs, tools
+3. **Writers Corner** — boards, loglines, tropes, feedback
+4. **AI Studio** — prompt → simulated generation → 9:16 player
 
-Also includes Home (hero + trending strip) and mobile nav.
+### Windows package
+Folder: `03-production/microdrama/windows-installer/`
 
----
+| Item | Notes |
+|------|--------|
+| `Install-Browser.bat` | Instant install — copies HTML to LocalAppData, desktop shortcut, opens browser |
+| `Uninstall-Browser.bat` | Removes browser install |
+| `main.js` + `package.json` | Electron + electron-builder source to build real `.exe` |
+| `README-WINDOWS.md` | How to install / build |
 
-## Where it lives
+**Real NSIS/portable .exe:** run on a Windows machine with Node:
+```
+cd windows-installer
+npm install
+npm run dist
+```
+Produces `MicroDramaLab-Setup-1.0.0.exe` and portable `.exe`.
 
-### Clean repo (target)
-- **Repo:** https://github.com/callmecoffee3/doaashow-clean  
-- **Path:** `03-production/microdrama/`
-  - `microdrama-app.html` — the whole app (single file)
-  - `README.md` — feature overview + how to run
-  - `MEMORY.md` — this file
-
-### Source origin (messy)
-- **Repo:** https://github.com/callmecoffee3/doaashow  
-- **Path:** `-(Projects)/-(MICRODRAMA)/`
-  - Earlier prototypes: `microdrama-ai.html`, `microdrama-app.md`, variants, zips
-  - Original was AI Studio + trending only; no community / creators / writers
-
-### Local working copy
-- `/home/workdir/artifacts/03-production/microdrama/`
-
----
-
-## Tech notes
-
-- Single HTML file: Tailwind CDN + Font Awesome 6 + vanilla JS
-- No backend; demo data hardcoded in JS
-- Client-side routing via show/hide `.page` sections
-- Generation is simulated (progress steps + sample vertical MP4)
-- Sample video: `https://cdn.truefilesize.com/mp4/sample-portrait.mp4`
-- Covers via picsum.photos
+(Linux lab sandbox could not finish a full Electron Windows cross-build in time; source is ready on GitHub.)
 
 ---
 
-## Mapping to clean structure
+## Paths
 
-| Clean folder | Role |
-|--------------|------|
-| `03-production/microdrama/` | Active production / story tool (this app) |
-| `06-legacy/` | Old genre dumps / placeholders if more MICRODRAMA stubs are imported later |
-
-Per doaashow-lab skill: new active work → `01-core` through `05-assets`; production / story tools → `03-production`.
-
----
-
-## Future ideas (from original + this pass)
-
-- Real AI video API (Runway, Kling, Luma, etc.)
-- Auth + real community posts
-- Export project/deck to Markdown or JSON
-- Drag-and-drop card reordering (from original index-card workspace)
-- Cloud sync / shareable project links
-- Index-card workspace (Character / Scene / Prop / Animal / Prompt) from original `microdrama-app.md` — not fully ported into this Lab UI yet
+| Location | Path |
+|----------|------|
+| Clean repo | https://github.com/callmecoffee3/doaashow-clean/tree/main/03-production/microdrama |
+| App HTML | `03-production/microdrama/microdrama-app.html` |
+| Windows kit | `03-production/microdrama/windows-installer/` |
+| Source origin | doaashow `-(Projects)/-(MICRODRAMA)/` |
 
 ---
 
-## Commits on doaashow-clean
+## Tech
 
-1. Add MicroDrama Lab app: Community Feed, Creators Corner, Writers Corner, AI Studio  
-2. Fix generateDrama Promise syntax error  
+- HTML: Tailwind CDN, Font Awesome, vanilla JS
+- Installer: batch + PowerShell shortcut
+- Desktop app path: Electron 33 + electron-builder (NSIS + portable)
 
 ---
 

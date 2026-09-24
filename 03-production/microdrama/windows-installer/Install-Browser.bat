@@ -13,7 +13,16 @@ echo.
 set "DEST=%LOCALAPPDATA%\MicroDramaLab"
 if not exist "%DEST%" mkdir "%DEST%"
 
-copy /Y "%~dp0app\index.html" "%DEST%\index.html" >nul
+set "SRC=%~dp0app\index.html"
+if not exist "%SRC%" set "SRC=%~dp0..\microdrama-app.html"
+if not exist "%SRC%" (
+  echo  ERROR: Could not find microdrama-app.html
+  echo  Put index.html in app\ or keep microdrama-app.html in parent folder.
+  pause
+  exit /b 1
+)
+
+copy /Y "%SRC%" "%DEST%\index.html" >nul
 if errorlevel 1 (
   echo  ERROR: Could not copy files.
   pause
@@ -24,7 +33,6 @@ echo  Installed to:
 echo    %DEST%
 echo.
 
-:: Desktop shortcut via PowerShell
 powershell -NoProfile -Command ^
   "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%USERPROFILE%\Desktop\MicroDrama Lab.url'); $s.TargetPath = '%DEST%\index.html'; $s.Save()" 2>nul
 
