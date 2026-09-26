@@ -6,6 +6,7 @@ Creative studios for the DoAShow lab.
 
 | Studio | Path | What it is |
 |--------|------|------------|
+| **Matt Grosso Studios** | `../streaming/` | Premium streaming service — original series, audio, The Fam community layer |
 | **ReelWave** | `../reelwave-studio/` | Micro-drama creation + community (feed, groups, pages, shop, messenger) |
 | **MicroDrama AI** | `../../06-legacy/-(Projects)/-(MICRODRAMA)/` | Original index-card → vertical drama tool |
 | **Whispers in the Wind** | (artifacts / local) | Sample drama project |
