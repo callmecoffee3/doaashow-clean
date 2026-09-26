@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matt Grosso Studios — Premium Streaming</title>
+  <meta name="description" content="Matt Grosso Studios — Original entertainment. Built in the lab. Streamed with intention. Microdrama, radio, The Fam, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #111111;
+      --card: #1a1a1a;
+      --card-hover: #222222;
+      --gold: #c8a951;
+      --gold-dark: #8b7332;
+      --gold-light: #e8d48b;
+      --cream: #f5e6c8;
+      --white: #ffffff;
+      --gray: #888888;
+      --light-gray: #cccccc;
+      --border: #2a2a2a;
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      backdrop-filter: blur(8px);
+      transition: background 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(10,10,10,0.92);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.5rem 1.25rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-radius: 2px;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 20%, rgba(200,169,81,0.08) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 600;
+      line-height: 1.05;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero h1 .studios {
+      display: block;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-line {
+      width: 80px;
+      height: 2px;
+      background: var(--gold);
+      margin: 1.75rem auto;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: var(--light-gray);
+      max-width: 520px;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-tagline {
+      margin-top: 2.5rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--gold-light);
+    }
+
+    .hero-actions {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.75rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-body);
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      color: var(--gray);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    /* ===== WHAT WE STREAM ===== */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .catalog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .catalog-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .catalog-card:hover {
+      background: var(--card-hover);
+      border-color: #333;
+      transform: translateY(-2px);
+    }
+
+    .catalog-card:hover::before {
+      opacity: 1;
+    }
+
+    .catalog-num {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .catalog-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+    }
+
+    .catalog-card p {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.55;
+    }
+
+    /* ===== FEATURES ===== */
+    .features {
+      background: var(--bg-elevated);
+      max-width: none;
+      padding: 5rem 1.5rem;
+    }
+
+    .features-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .features-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .feature-row:last-child {
+      border-bottom: none;
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .feature-desc {
+      color: var(--light-gray);
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+
+    /* ===== PIPELINE ===== */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .pipeline-step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem 1.25rem;
+      text-align: center;
+    }
+
+    .pipeline-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .pipeline-step h3 {
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .pipeline-step p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* ===== WHY ===== */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .why-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem;
+    }
+
+    .why-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+    }
+
+    .why-card p {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.55;
+    }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      text-align: center;
+      padding: 6rem 1.5rem;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 50%, rgba(200,169,81,0.06) 0%, transparent 70%),
+        var(--bg);
+    }
+
+    .cta-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: var(--gray);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    footer .logo {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      letter-spacing: 0.04em;
+    }
+
+    footer a {
+      color: var(--gold-dark);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--gold);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .feature-row {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+      }
+
+      .pipeline-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pipeline-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* subtle entrance */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="logo">Matt Grosso <span>Studios</span></a>
+    <ul class="nav-links">
+      <li><a href="#stream">Stream</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#why">Why</a></li>
+    </ul>
+    <a href="#cta" class="nav-cta">Get Started</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <p class="hero-eyebrow">Premium Streaming Service</p>
+    <h1>
+      Matt Grosso
+      <span class="studios">Studios</span>
+    </h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Original stories. Audio experiences. Community that creates with you.</p>
+    <p class="hero-tagline">Where the lab becomes the stream.</p>
+    <div class="hero-actions">
+      <a href="#stream" class="btn btn-primary">Explore Catalog</a>
+      <a href="#cta" class="btn btn-ghost">Join The Fam</a>
+    </div>
+  </header>
+
+  <!-- WHAT WE STREAM -->
+  <section id="stream">
+    <p class="section-label fade-in">What We Stream</p>
+    <h2 class="section-title fade-in">Six ways to experience the lab</h2>
+    <p class="section-desc fade-in">From microdrama to live events — every format has a home here.</p>
+
+    <div class="catalog-grid">
+      <article class="catalog-card fade-in">
+        <div class="catalog-num">01</div>
+        <h3>Microdrama & Web Series</h3>
+        <p>Short, bingeable original stories. High concept, low runtime, maximum impact.</p>
+      </article>
+      <article class="catalog-card fade-in">
+        <div class="catalog-num">02</div>
+        <h3>Radio & Audio Shows</h3>
+        <p>Live and on-demand radio experiences, podcasts, and narrative audio.</p>
+      </article>
+      <article class="catalog-card fade-in">
+        <div class="catalog-num">03</div>
+        <h3>The Fam Network</h3>
+        <p>Social hubs, live chat, creator tools, and community-driven content.</p>
+      </article>
+      <article class="catalog-card fade-in">
+        <div class="catalog-num">04</div>
+        <h3>Desktop & Interactive</h3>
+        <p>Experimental interfaces, simulated desktops, and playful digital experiences.</p>
+      </article>
+      <article class="catalog-card fade-in">
+        <div class="catalog-num">05</div>
+        <h3>Behind the Scenes</h3>
+        <p>Making-of, creator diaries, and transparent production from the lab.</p>
+      </article>
+      <article class="catalog-card fade-in">
+        <div class="catalog-num">06</div>
+        <h3>Live Events</h3>
+        <p>Premieres, watch parties, and real-time community sessions.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="features-inner">
+      <p class="section-label fade-in">Platform</p>
+      <h2 class="section-title fade-in">Built for immersion and creation</h2>
+      <p class="section-desc fade-in">Everything you need to watch, create, and connect — without the noise.</p>
+
+      <div class="features-list">
+        <div class="feature-row fade-in">
+          <div class="feature-title">Clean, Cinematic UI</div>
+          <div class="feature-desc">Dark, distraction-free interface designed for immersion and discovery.</div>
+        </div>
+        <div class="feature-row fade-in">
+          <div class="feature-title">Multi-Format Playback</div>
+          <div class="feature-desc">Video, audio, live streams, and interactive experiences in one place.</div>
+        </div>
+        <div class="feature-row fade-in">
+          <div class="feature-title">Creator Tools</div>
+          <div class="feature-desc">Upload, schedule, collaborate, and publish directly from the studio dashboard.</div>
+        </div>
+        <div class="feature-row fade-in">
+          <div class="feature-title">Community Layer</div>
+          <div class="feature-desc">Comments, reactions, The Fam rooms, and direct creator-audience connection.</div>
+        </div>
+        <div class="feature-row fade-in">
+          <div class="feature-title">Cross-Device</div>
+          <div class="feature-desc">Seamless experience on web, mobile, and smart TV.</div>
+        </div>
+        <div class="feature-row fade-in">
+          <div class="feature-title">Transparent Lab Spirit</div>
+          <div class="feature-desc">Keep the playful, experimental heart of doaashow — just more polished.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section id="pipeline">
+    <p class="section-label fade-in">Content Pipeline</p>
+    <h2 class="section-title fade-in">From idea to stream</h2>
+    <p class="section-desc fade-in">A clear path for every experiment that wants an audience.</p>
+
+    <div class="pipeline-grid">
+      <div class="pipeline-step fade-in">
+        <div class="pipeline-num">01</div>
+        <h3>Ideate</h3>
+        <p>Lab sessions, genre experiments, microdrama concepts, and The Fam ideas.</p>
+      </div>
+      <div class="pipeline-step fade-in">
+        <div class="pipeline-num">02</div>
+        <h3>Produce</h3>
+        <p>Write, record, edit, design. Desktop tools, audio suites, and story systems.</p>
+      </div>
+      <div class="pipeline-step fade-in">
+        <div class="pipeline-num">03</div>
+        <h3>Package</h3>
+        <p>Polish packaging, trailers, metadata, and discovery-friendly presentation.</p>
+      </div>
+      <div class="pipeline-step fade-in">
+        <div class="pipeline-num">04</div>
+        <h3>Stream</h3>
+        <p>Release on Matt Grosso Studios. Live events, watch parties, feedback loops.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why">
+    <p class="section-label fade-in">Why It Matters</p>
+    <h2 class="section-title fade-in">Intention over volume</h2>
+    <p class="section-desc fade-in">Most platforms optimize for volume. We optimize for intention.</p>
+
+    <div class="why-grid">
+      <div class="why-card fade-in">
+        <h3>Creator-Owned</h3>
+        <p>Built by the same people making the content. No middle layers diluting the vision.</p>
+      </div>
+      <div class="why-card fade-in">
+        <h3>Format Freedom</h3>
+        <p>Not locked into rigid runtimes. Microdrama, radio, interactive — all first-class.</p>
+      </div>
+      <div class="why-card fade-in">
+        <h3>Audience as Partner</h3>
+        <p>The Fam turns viewers into participants. Feedback is part of the product.</p>
+      </div>
+      <div class="why-card fade-in">
+        <h3>Lab → Stage</h3>
+        <p>Experimental work has a clear path from desktop experiments to polished streams.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <h2 class="fade-in">Ready to stream the lab?</h2>
+    <p class="fade-in">Join The Fam. Watch original work. Create with us.</p>
+    <div class="hero-actions fade-in">
+      <a href="https://github.com/callmecoffee3/doaashow-clean" class="btn btn-primary" target="_blank" rel="noopener">Explore the Lab</a>
+      <a href="https://github.com/callmecoffee3/doaashow-clean/tree/main/03-production/streaming" class="btn btn-ghost" target="_blank" rel="noopener">View Artifact</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="logo">Matt Grosso <span>Studios</span></a>
+    <p>Built by Matt Grosso · callmecoffee3 · doaashow</p>
+    <p style="margin-top: 0.5rem;">Where the lab becomes the stream.</p>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById("nav");
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("scrolled", window.scrollY > 40);
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
